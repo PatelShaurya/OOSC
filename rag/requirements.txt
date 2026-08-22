@@ -1,3 +1,8 @@
 PyMuPDF>=1.23.0
 pydantic>=2.0.0
 pytest>=7.0.0
+sentence-transformers>=2.2.0
+torch
+numpy
+supabase
+python-dotenv

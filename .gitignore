@@ -25,7 +25,14 @@ share/python-wheels/
 venv/
 .venv/
 env/
+ENV/
+
+# Environment Variables & Secrets (Keep .env.example tracked)
 .env
+.env.*
+!.env.example
+backend/.env
+rag/.env
 
 # Testing & Coverage
 .pytest_cache/
@@ -34,14 +41,23 @@ htmlcov/
 .tox/
 .nox/
 
-# IDE & Editor files
+# IDE & Editors
 .vscode/
 .idea/
 *.swp
 *.swo
 *~
 
-# Data directories (keep folder structure via .gitkeep, ignore data contents)
+# ML Models & Local Cache
+.cache/
+huggingface/
+*.safetensors
+*.bin
+*.pt
+*.pth
+*.onnx
+
+# Data Directories (keep folder structure via .gitkeep, ignore generated data)
 rag/data/raw/*
 !rag/data/raw/.gitkeep
 rag/data/processed/*
@@ -49,6 +65,8 @@ rag/data/processed/*
 rag/data/metadata/*
 !rag/data/metadata/.gitkeep
 
-# OS generated
+# Logs & OS generated
+logs/
+*.log
 .DS_Store
 Thumbs.db
