@@ -1,0 +1,102 @@
+[
+  {
+    "id": "q001",
+    "question": "What rights does a consumer have under the law?",
+    "expected_sections": ["Section 2"]
+  },
+  {
+    "id": "q002",
+    "question": "What can a consumer do if they receive a defective product?",
+    "expected_sections": ["Section 39", "Section 83", "Section 84"]
+  },
+  {
+    "id": "q003",
+    "question": "What is defined as an unfair trade practice?",
+    "expected_sections": ["Section 2", "Section 94"]
+  },
+  {
+    "id": "q004",
+    "question": "How can a consumer file a formal complaint with the District Commission?",
+    "expected_sections": ["Section 35", "Section 17"]
+  },
+  {
+    "id": "q005",
+    "question": "What compensation and remedies can a District Commission award to a consumer?",
+    "expected_sections": ["Section 39", "Section 82"]
+  },
+  {
+    "id": "q006",
+    "question": "Who can be held liable in a product liability action for a manufacturing defect?",
+    "expected_sections": ["Section 83", "Section 84", "Section 86"]
+  },
+  {
+    "id": "q007",
+    "question": "What is the procedure followed by the District Commission upon receiving a complaint?",
+    "expected_sections": ["Section 38", "Section 35"]
+  },
+  {
+    "id": "q008",
+    "question": "What actions can the Central Consumer Protection Authority take against misleading advertisements?",
+    "expected_sections": ["Section 21", "Section 20"]
+  },
+  {
+    "id": "q009",
+    "question": "Can a consumer dispute be settled through mediation?",
+    "expected_sections": ["Section 74", "Section 38", "Section 81"]
+  },
+  {
+    "id": "q10",
+    "question": "What is the pecuniary jurisdiction of the District Commission for filing complaints?",
+    "expected_sections": ["Section 34"]
+  },
+  {
+    "id": "q011",
+    "question": "How can an appeal be filed against an order passed by the District Commission?",
+    "expected_sections": ["Section 41"]
+  },
+  {
+    "id": "q012",
+    "question": "What is the liability of a product service provider under product liability?",
+    "expected_sections": ["Section 85", "Section 83"]
+  },
+  {
+    "id": "q013",
+    "question": "What constitutes a deficiency in service under consumer law?",
+    "expected_sections": ["Section 2"]
+  },
+  {
+    "id": "q014",
+    "question": "What measures can the Central Government take to prevent unfair trade practices in e-commerce?",
+    "expected_sections": ["Section 94", "Section 2"]
+  },
+  {
+    "id": "q015",
+    "question": "Who qualifies as a complainant eligible to file a consumer complaint?",
+    "expected_sections": ["Section 2", "Section 35"]
+  },
+  {
+    "id": "q016",
+    "question": "What are the powers of the Central Authority to recall hazardous goods from the market?",
+    "expected_sections": ["Section 20", "Section 18"]
+  },
+  {
+    "id": "q017",
+    "question": "What happens if a trader or manufacturer fails to comply with an order of the District Commission?",
+    "expected_sections": ["Section 39"]
+  },
+  {
+    "id": "q018",
+    "question": "What is defined as an unfair contract under the Consumer Protection Act?",
+    "expected_sections": ["Section 2"]
+  },
+  {
+    "id": "q019",
+    "question": "Can a consumer complaint be filed electronically through an online portal?",
+    "expected_sections": ["Section 35", "Section 17"]
+  },
+  {
+    "id": "q020",
+    "question": "What is the role of the State Consumer Disputes Redressal Commission?",
+    "expected_sections": ["Section 47"]
+  }
+]
