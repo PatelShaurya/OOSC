@@ -1,11 +1,13 @@
 """
 RAG Pipeline Orchestrator connecting Retrieval, Reranking, LLM Generation, and Verified Citation Mapping.
 """
-from typing import Optional, List
-from rag.app.api.models import RAGQueryResponse, RetrievalDebugInfo
+from typing import Optional, List, TYPE_CHECKING
 from rag.app.citations.mapper import CitationMapper
 from rag.app.generation.generator import Generator
 from rag.app.reranking.reranker import RerankedRetriever
+
+if TYPE_CHECKING:
+    from rag.app.api.models import RAGQueryResponse
 
 
 class RAGPipeline:
@@ -33,7 +35,7 @@ class RAGPipeline:
         document_type: Optional[str] = None,
         issuing_authority: Optional[str] = None,
         include_debug: bool = True
-    ) -> RAGQueryResponse:
+    ) -> "RAGQueryResponse":
         """
         Executes end-to-end RAG pipeline for a given user query.
 
@@ -74,6 +76,8 @@ class RAGPipeline:
         )
 
         # 4. Construct response model
+        from rag.app.api.models import RAGQueryResponse, RetrievalDebugInfo
+
         debug_info = None
         if include_debug:
             debug_info = RetrievalDebugInfo(

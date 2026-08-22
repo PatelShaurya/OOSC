@@ -1,0 +1,782 @@
+{
+  "provider": "google",
+  "model": "gemini-3.5-flash-lite",
+  "metrics": {
+    "total_queries_tested": 17,
+    "grounded_count": 14,
+    "partially_grounded_count": 0,
+    "unsupported_count": 3,
+    "hallucinated_count": 0,
+    "grounded_answer_rate": 82.35,
+    "citation_correctness_rate": 100.0,
+    "unsupported_answer_rate": 17.65,
+    "hallucination_rate": 0.0
+  },
+  "results": [
+    {
+      "query": "What rights does a consumer have?",
+      "retrieved_documents": [
+        "Consumer Protection Act, 2019",
+        "Consumer Protection Act, 2019",
+        "Consumer Protection Act, 2019",
+        "Consumer Protection Act, 2019",
+        "Consumer Protection Act, 2019"
+      ],
+      "retrieved_sections": [
+        "Section 2",
+        "Section 17",
+        "Section 18",
+        "Section 2",
+        "Section 16"
+      ],
+      "reranker_scores": [
+        0.9044,
+        0.4103,
+        0.4094,
+        0.3866,
+        0.1866
+      ],
+      "answer": "According to the Consumer Protection Act, 2019, consumer rights include:\n1. The right to be protected against the marketing of goods, products, or services that are hazardous to life and property.\n2. The right to be informed about the quality, quantity, potency, purity, standard, and price of goods, products, or services to protect consumers against unfair trade practices.\n3. The right to be assured, wherever possible, access to a variety of goods, products, or services at competitive prices.\n4. The right to be heard and to be assured that consumer interests will receive due consideration at appropriate fora.\n5. The right to seek redressal against unfair trade practices, restrictive trade practices, or unscrupulous exploitation.\n6. The right to consumer awareness.",
+      "limitations": null,
+      "citation_count": 1,
+      "citations": [
+        {
+          "source_id": "consumer_protection_act_2019_section_2_4",
+          "document_title": "Consumer Protection Act, 2019",
+          "section": "Section 2",
+          "page_start": 3,
+          "page_end": 4,
+          "source_url": "https://ncdrc.nic.in/bare_acts/CPA2019.pdf"
+        }
+      ],
+      "grounding_status": "GROUNDED",
+      "citation_correctness": "CORRECT",
+      "notes": "Answer is fully supported by retrieved context and attached verified citations."
+    },
+    {
+      "query": "What can I do if I receive a defective product?",
+      "retrieved_documents": [
+        "Consumer Protection Act, 2019",
+        "Consumer Protection Act, 2019",
+        "Consumer Protection Act, 2019",
+        "Consumer Protection Act, 2019",
+        "Consumer Protection Act, 2019"
+      ],
+      "retrieved_sections": [
+        "Section 83",
+        "Section 82",
+        "Section 39",
+        "Section 84",
+        "Section 38"
+      ],
+      "reranker_scores": [
+        0.6221,
+        0.1975,
+        0.1252,
+        0.0793,
+        0.0317
+      ],
+      "answer": "If you receive a defective product and suffer harm, you can bring a product liability action against the product manufacturer, product service provider, or product seller, as applicable. Additionally, you can file a complaint with the District Commission. If the District Commission is satisfied that the goods are defective, it can issue an order directing the opposite party to take one or more of the following actions:\n- Remove the defect pointed out by the appropriate laboratory;\n- Replace the goods with new goods of a similar description that are free from any defect;\n- Return the price or charges paid by you, along with applicable interest;\n- Pay an amount awarded as compensation for any loss or injury suffered due to the opposite party's negligence (including punitive damages or product liability compensation);\n- Discontinue or not repeat unfair or restrictive trade practices, or withdraw/cease offering hazardous or unsafe goods.",
+      "limitations": null,
+      "citation_count": 3,
+      "citations": [
+        {
+          "source_id": "consumer_protection_act_2019_section_83_93",
+          "document_title": "Consumer Protection Act, 2019",
+          "section": "Section 83",
+          "page_start": 31,
+          "page_end": 31,
+          "source_url": "https://ncdrc.nic.in/bare_acts/CPA2019.pdf"
+        },
+        {
+          "source_id": "consumer_protection_act_2019_section_82_92",
+          "document_title": "Consumer Protection Act, 2019",
+          "section": "Section 82",
+          "page_start": 31,
+          "page_end": 31,
+          "source_url": "https://ncdrc.nic.in/bare_acts/CPA2019.pdf"
+        },
+        {
+          "source_id": "consumer_protection_act_2019_section_39_48",
+          "document_title": "Consumer Protection Act, 2019",
+          "section": "Section 39",
+          "page_start": 21,
+          "page_end": 22,
+          "source_url": "https://ncdrc.nic.in/bare_acts/CPA2019.pdf"
+        }
+      ],
+      "grounding_status": "GROUNDED",
+      "citation_correctness": "CORRECT",
+      "notes": "Answer is fully supported by retrieved context and attached verified citations."
+    },
+    {
+      "query": "How can a consumer file a complaint?",
+      "retrieved_documents": [
+        "Consumer Protection Act, 2019",
+        "Consumer Protection Act, 2019",
+        "Consumer Protection Act, 2019",
+        "Consumer Protection Act, 2019",
+        "Consumer Protection Act, 2019"
+      ],
+      "retrieved_sections": [
+        "Section 35",
+        "Section 17",
+        "Section 16",
+        "Section 38",
+        "Section 19"
+      ],
+      "reranker_scores": [
+        0.9107,
+        0.7255,
+        0.0915,
+        0.0599,
+        0.029
+      ],
+      "answer": "A consumer complaint regarding goods sold, delivered, agreed to be sold/delivered, services provided/agreed to be provided, or unfair trade practices can be filed with a District Commission by:\n- The individual consumer to whom the goods or services were provided or agreed to be provided, or who alleges an unfair trade practice.\n- Any recognized consumer association (a voluntary consumer association registered under any law for the time being in force), regardless of whether the consumer is a member.\n- One or more consumers on behalf of, or for the benefit of, numerous consumers having the same interest, with the permission of the District Commission.\n- The Central Government, the Central Authority, or the State Government.\n\nAdditionally, complaints can be filed electronically in a prescribed manner. Every filed complaint must be accompanied by the prescribed fee payable in the prescribed manner (including electronic form).\n\nFurthermore, complaints relating to the violation of consumer rights, unfair trade practices, or false/misleading advertisements prejudicial to the interests of consumers as a class may be forwarded either in writing or in electronic mode to the District Collector, the Commissioner of a regional office, or the Central Authority.",
+      "limitations": null,
+      "citation_count": 2,
+      "citations": [
+        {
+          "source_id": "consumer_protection_act_2019_section_35_42",
+          "document_title": "Consumer Protection Act, 2019",
+          "section": "Section 35",
+          "page_start": 18,
+          "page_end": 18,
+          "source_url": "https://ncdrc.nic.in/bare_acts/CPA2019.pdf"
+        },
+        {
+          "source_id": "consumer_protection_act_2019_section_17_24",
+          "document_title": "Consumer Protection Act, 2019",
+          "section": "Section 17",
+          "page_start": 13,
+          "page_end": 13,
+          "source_url": "https://ncdrc.nic.in/bare_acts/CPA2019.pdf"
+        }
+      ],
+      "grounding_status": "GROUNDED",
+      "citation_correctness": "CORRECT",
+      "notes": "Answer is fully supported by retrieved context and attached verified citations."
+    },
+    {
+      "query": "What is an unfair trade practice?",
+      "retrieved_documents": [
+        "Consumer Protection Act, 2019",
+        "Consumer Protection Act, 2019",
+        "Consumer Protection Act, 2019",
+        "Consumer Protection Act, 2019",
+        "Consumer Protection Act, 2019"
+      ],
+      "retrieved_sections": [
+        "Section 2",
+        "Section 20",
+        "Section 2",
+        "Section 2",
+        "Section 35"
+      ],
+      "reranker_scores": [
+        0.9641,
+        0.7705,
+        0.7421,
+        0.6857,
+        0.6317
+      ],
+      "answer": "An \"unfair trade practice\" is defined as a trade practice that adopts any unfair method or unfair or deceptive practice for the purpose of promoting the sale, use, or supply of any goods or for the provision of any service. This includes, but is not limited to, making any oral, written, or visually represented statement (including through electronic records) that:\n\n1. Falsely represents goods to be of a particular standard, quality, quantity, grade, composition, style, or model.\n2. Falsely represents services to be of a particular standard, quality, or grade.\n3. Falsely represents any re-built, second-hand, renovated, reconditioned, or old goods as new goods.\n4. Represents that goods or services have sponsorship, approval, performance, characteristics, accessories, uses, or benefits which they do not have.\n5. Represents that the seller or supplier has a sponsorship, approval, or affiliation that they do not have.\n6. Makes a false or misleading representation concerning the need for, or the usefulness of, any goods or services.\n7. Gives to the public any warranty or guarantee of the performance, efficacy, or length of life of a product or goods that is not based on an adequate or proper test (with the burden of proof resting on the person raising the defense that the test was adequate or proper).\n8. Makes a representation to the public in a form that purports to be a warranty or guarantee of a product, goods, or services.",
+      "limitations": null,
+      "citation_count": 1,
+      "citations": [
+        {
+          "source_id": "consumer_protection_act_2019_section_2_7",
+          "document_title": "Consumer Protection Act, 2019",
+          "section": "Section 2",
+          "page_start": 7,
+          "page_end": 8,
+          "source_url": "https://ncdrc.nic.in/bare_acts/CPA2019.pdf"
+        }
+      ],
+      "grounding_status": "GROUNDED",
+      "citation_correctness": "CORRECT",
+      "notes": "Answer is fully supported by retrieved context and attached verified citations."
+    },
+    {
+      "query": "What compensation can a consumer receive?",
+      "retrieved_documents": [
+        "Consumer Protection Act, 2019",
+        "Consumer Protection Act, 2019",
+        "Consumer Protection Act, 2019",
+        "Consumer Protection Act, 2019",
+        "Consumer Protection Act, 2019"
+      ],
+      "retrieved_sections": [
+        "Section 39",
+        "Section 2",
+        "Section 82",
+        "Section 90",
+        "Section 91"
+      ],
+      "reranker_scores": [
+        0.1861,
+        0.0963,
+        0.0182,
+        0.0111,
+        0.0078
+      ],
+      "answer": "When the District Commission is satisfied that goods are defective, services are deficient, unfair trade practices have occurred, or a claim for compensation under product liability is proved, it can direct the opposite party to provide one or more of the following remedies and compensations:\n\n1. Remove the defects in the goods or deficiencies in the services.\n2. Replace the goods with new goods of a similar description that are free from defects.\n3. Return the price or charges paid by the consumer along with decided interest.\n4. Pay an awarded amount as compensation to the consumer for any loss or injury suffered due to the opposite party's negligence.\n5. Pay an amount awarded as compensation in a product liability action.\n6. Pay a determined sum if loss or injury has been suffered by a large number of unidentifiable consumers (with a minimum amount of not less than twenty-five percent of the value of the defective goods sold or services provided to those consumers).\n7. Provide adequate costs to the parties.\n\nAdditionally, the District Commission has the power to grant punitive damages in circumstances it deems fit.",
+      "limitations": null,
+      "citation_count": 1,
+      "citations": [
+        {
+          "source_id": "consumer_protection_act_2019_section_39_48",
+          "document_title": "Consumer Protection Act, 2019",
+          "section": "Section 39",
+          "page_start": 21,
+          "page_end": 22,
+          "source_url": "https://ncdrc.nic.in/bare_acts/CPA2019.pdf"
+        }
+      ],
+      "grounding_status": "GROUNDED",
+      "citation_correctness": "CORRECT",
+      "notes": "Answer is fully supported by retrieved context and attached verified citations."
+    },
+    {
+      "query": "What is PM Kisan and who is eligible for it?",
+      "retrieved_documents": [
+        "PM Kissan Yojna - Frequently Asked Questions",
+        "PM Kissan Yojna - Frequently Asked Questions",
+        "PM Kissan Yojna - Frequently Asked Questions",
+        "PM Kissan Yojna - Frequently Asked Questions",
+        "PM Kissan Yojna - Frequently Asked Questions"
+      ],
+      "retrieved_sections": [
+        "Section 5",
+        "Section 4",
+        "Section 5",
+        "Section 01",
+        "Section 1"
+      ],
+      "reranker_scores": [
+        0.7942,
+        0.6801,
+        0.5418,
+        0.4744,
+        0.4318
+      ],
+      "answer": "PM-KISAN (Pradhan Mantri Kisan Samman Nidhi) is a Central Sector Scheme implemented by the Central Government to provide income support to all landholding farmers' families in the country who have cultivable land. \n\nRegarding eligibility, landholding farmers' families with cultivable land are generally eligible, provided they do not fall under any of the exclusion categories of higher economic status. The following categories are excluded and not eligible for benefits under the scheme:\n- All institutional landholders.\n- Farmer families in which one or more members belong to the following categories:\n  1. Former and present holders of constitutional posts.\n  2. Former and present Ministers, State Ministers, Members of Lok Sabha, Rajya Sabha, State Legislative Assemblies, State Legislative Councils, Mayors of Municipal Corporations, and Chairpersons of District Panchayats.\n  3. All serving or retired officers and employees of Central/State Government Ministries, Offices, Departments, and their field units, Central or State PSEs, attached offices/autonomous institutions under the government, and regular employees of local bodies (excluding Multi-Tasking Staff, Class IV, or Group D employees).\n  4. All superannuated or retired pensioners with a monthly pension of Rs. 10,000/- or more (excluding Multi-Tasking Staff, Class IV, or Group D employees).\n  5. All persons who paid income tax in the last assessment year.\n  6. Professionals such as doctors, engineers, lawyers, chartered accountants, and architects who are registered with professional bodies and carry out their profession by undertaking practices.\n- All landholding farmers' families who are Non-Resident Indians (NRIs) under the provisions of the Income Tax Act, 1961.",
+      "limitations": "The provided sources detail who is excluded from the scheme and that it applies to landholding farmers' families with cultivable land, but they do not provide an exhaustive step-by-step description of the positive application procedure or exact benefit amounts.",
+      "citation_count": 2,
+      "citations": [
+        {
+          "source_id": "PM_Kissan_faq_section_4_5",
+          "document_title": "PM Kissan Yojna - Frequently Asked Questions",
+          "section": "Section 4",
+          "page_start": 2,
+          "page_end": 3,
+          "source_url": "https://pmkisan.gov.in/Documents/RevisedFAQ.pdf"
+        },
+        {
+          "source_id": "PM_Kissan_faq_section_1_2",
+          "document_title": "PM Kissan Yojna - Frequently Asked Questions",
+          "section": "Section 1",
+          "page_start": 2,
+          "page_end": 2,
+          "source_url": "https://pmkisan.gov.in/Documents/RevisedFAQ.pdf"
+        }
+      ],
+      "grounding_status": "GROUNDED",
+      "citation_correctness": "CORRECT",
+      "notes": "Answer is fully supported by retrieved context and attached verified citations."
+    },
+    {
+      "query": "What benefits does PM Kisan provide?",
+      "retrieved_documents": [
+        "PM Kissan Yojna - Frequently Asked Questions",
+        "PM Kissan Yojna - Frequently Asked Questions",
+        "PM Kissan Yojna - Frequently Asked Questions",
+        "PM Kissan Yojna - Frequently Asked Questions",
+        "PM Kissan Yojna - Frequently Asked Questions"
+      ],
+      "retrieved_sections": [
+        "Section 9",
+        "Section 1",
+        "Section 5",
+        "Section 5",
+        "Section 01"
+      ],
+      "reranker_scores": [
+        0.9744,
+        0.8443,
+        0.7391,
+        0.6384,
+        0.5831
+      ],
+      "answer": "The PM-KISAN scheme provides income support to all landholding farmers' families in the country that have cultivable land. Additionally, the PM-Kisan Portal serves to provide timely assistance to farmers in farm operations and offers a unified e-platform for transferring cash benefits directly into the farmer's bank account through the Public Financial Management System (PFMS). It also maintains a verified and single source of truth for farmer details, location-wise availability of benefited lists, and enables easy country-wide monitoring of fund transaction details.",
+      "limitations": null,
+      "citation_count": 2,
+      "citations": [
+        {
+          "source_id": "PM_Kissan_faq_section_9_38",
+          "document_title": "PM Kissan Yojna - Frequently Asked Questions",
+          "section": "Section 9",
+          "page_start": 8,
+          "page_end": 8,
+          "source_url": "https://pmkisan.gov.in/Documents/RevisedFAQ.pdf"
+        },
+        {
+          "source_id": "PM_Kissan_faq_section_1_2",
+          "document_title": "PM Kissan Yojna - Frequently Asked Questions",
+          "section": "Section 1",
+          "page_start": 2,
+          "page_end": 2,
+          "source_url": "https://pmkisan.gov.in/Documents/RevisedFAQ.pdf"
+        }
+      ],
+      "grounding_status": "GROUNDED",
+      "citation_correctness": "CORRECT",
+      "notes": "Answer is fully supported by retrieved context and attached verified citations."
+    },
+    {
+      "query": "How can an eligible farmer apply?",
+      "retrieved_documents": [
+        "PM Kissan Yojna - Frequently Asked Questions",
+        "PM Kissan Yojna - Frequently Asked Questions",
+        "PM Kissan Yojna - Frequently Asked Questions",
+        "PM Kissan Yojna - Frequently Asked Questions",
+        "PM Kissan Yojna - Frequently Asked Questions"
+      ],
+      "retrieved_sections": [
+        "Section 6",
+        "Section 10",
+        "Section 2",
+        "Section 6",
+        "Section 5"
+      ],
+      "reranker_scores": [
+        0.1564,
+        0.1163,
+        0.0419,
+        0.0368,
+        0.0145
+      ],
+      "answer": "The provided legal sources do not contain instructions or steps on how an eligible farmer can personally apply for the scheme. Instead, the sources state that the responsibility of identifying eligible landholder farmer families and preparing their database rests with the State or UT Government.",
+      "limitations": "The retrieved sources do not provide information on the application process for farmers.",
+      "citation_count": 1,
+      "citations": [
+        {
+          "source_id": "PM_Kissan_faq_section_6_24",
+          "document_title": "PM Kissan Yojna - Frequently Asked Questions",
+          "section": "Section 6",
+          "page_start": 6,
+          "page_end": 6,
+          "source_url": "https://pmkisan.gov.in/Documents/RevisedFAQ.pdf"
+        }
+      ],
+      "grounding_status": "GROUNDED",
+      "citation_correctness": "CORRECT",
+      "notes": "Answer is fully supported by retrieved context and attached verified citations."
+    },
+    {
+      "query": "What documents are required?",
+      "retrieved_documents": [
+        "PM Kissan Yojna - Frequently Asked Questions",
+        "Consumer Protection Act, 2019",
+        "Consumer Protection Act, 2019",
+        "Consumer Protection Act, 2019",
+        "Consumer Protection Act, 2019"
+      ],
+      "retrieved_sections": [
+        "Section 6",
+        "Section 38",
+        "Section 2",
+        "Section 65",
+        "Section 101"
+      ],
+      "reranker_scores": [
+        0.5321,
+        0.2481,
+        0.203,
+        0.1606,
+        0.0786
+      ],
+      "answer": "Depending on the context, the required documents and information include:\n\n1. **For PM-Kisan Yojna Beneficiaries:**\n   - States capture beneficiary landholder farmer family details including Name, Age, Gender, Category (SC/ST), Aadhaar Number, Bank Account Number, and Mobile Number.\n   - In the states of Assam, Meghalaya, and J&K (where most citizens have not been issued Aadhaar numbers), Aadhaar is collected where available. For others, alternate prescribed identity verification documents can be collected, such as a Driving Licence, Voter ID Card, NREGA Job Card, or any other identification documents issued by Central, State, or UT Governments or their authorities.\n\n2. **For Consumer Protection (District Commission Proceedings):**\n   - The District Commission may require electronic service providers to provide specified information, documents, or records.\n   - Every complaint is heard on the basis of affidavits and documentary evidence placed on record.\n   - The District Commission holds powers to require the discovery and production of any document or other material object as evidence.",
+      "limitations": "The retrieved sources mention various documents in different legal and civic contexts (such as identity documents for specific states under PM-Kisan and documentary evidence in consumer disputes), but do not provide an exhaustive general list of all documents required for all possible administrative procedures.",
+      "citation_count": 2,
+      "citations": [
+        {
+          "source_id": "PM_Kissan_faq_section_6_24",
+          "document_title": "PM Kissan Yojna - Frequently Asked Questions",
+          "section": "Section 6",
+          "page_start": 6,
+          "page_end": 6,
+          "source_url": "https://pmkisan.gov.in/Documents/RevisedFAQ.pdf"
+        },
+        {
+          "source_id": "consumer_protection_act_2019_section_38_46",
+          "document_title": "Consumer Protection Act, 2019",
+          "section": "Section 38",
+          "page_start": 20,
+          "page_end": 21,
+          "source_url": "https://ncdrc.nic.in/bare_acts/CPA2019.pdf"
+        }
+      ],
+      "grounding_status": "GROUNDED",
+      "citation_correctness": "CORRECT",
+      "notes": "Answer is fully supported by retrieved context and attached verified citations."
+    },
+    {
+      "query": "Who is not eligible for PM Kisan?",
+      "retrieved_documents": [
+        "PM Kissan Yojna - Frequently Asked Questions",
+        "PM Kissan Yojna - Frequently Asked Questions",
+        "PM Kissan Yojna - Frequently Asked Questions",
+        "PM Kissan Yojna - Frequently Asked Questions",
+        "PM Kissan Yojna - Frequently Asked Questions"
+      ],
+      "retrieved_sections": [
+        "Section 4",
+        "Section 01",
+        "Section 5",
+        "Section 5",
+        "Section 5"
+      ],
+      "reranker_scores": [
+        0.9389,
+        0.8051,
+        0.6008,
+        0.271,
+        0.1164
+      ],
+      "answer": "According to the retrieved sources, beneficiaries of higher economic status and certain other categories are not eligible for benefits under the PM-Kisan scheme. Specifically, the excluded categories are:\n\n1. All institutional landholders.\n2. Farmer families where one or more members belong to any of the following categories:\n   - Former and present holders of constitutional posts.\n   - Former and present Ministers, State Ministers, and former or present Members of the Lok Sabha, Rajya Sabha, State Legislative Assemblies, State Legislative Councils, former and present Mayors of Municipal Corporations, and former and present Chairpersons of District Panchayats.\n   - All serving or retired officers and employees of Central or State Government Ministries, Offices, Departments, and their field units, Central or State Public Sector Enterprises (PSEs), attached offices, autonomous institutions under the government, and regular employees of local bodies (excluding Multi-Tasking Staff, Class IV, or Group D employees).\n   - All superannuated or retired pensioners whose monthly pension is Rs. 10,000/- or more (excluding Multi-Tasking Staff, Class IV, or Group D employees).\n   - All persons who paid income tax in the last assessment year.\n   - Professionals such as doctors, engineers, lawyers, chartered accountants, and architects who are registered with professional bodies and carry out their profession by undertaking practices.\n3. All land-holding farmer families who are Non-Resident Indians (NRIs) in terms of the provisions of the Income Tax Act, 1961, in the case of new beneficiaries uploaded on the PM-KISAN Portal.\n4. Transferees of land in certain land transfer cases where benefits are determined to be stopped after reassessment.",
+      "limitations": null,
+      "citation_count": 2,
+      "citations": [
+        {
+          "source_id": "PM_Kissan_faq_section_4_5",
+          "document_title": "PM Kissan Yojna - Frequently Asked Questions",
+          "section": "Section 4",
+          "page_start": 2,
+          "page_end": 3,
+          "source_url": "https://pmkisan.gov.in/Documents/RevisedFAQ.pdf"
+        },
+        {
+          "source_id": "PM_Kissan_faq_section_01_17",
+          "document_title": "PM Kissan Yojna - Frequently Asked Questions",
+          "section": "Section 01",
+          "page_start": 5,
+          "page_end": 5,
+          "source_url": "https://pmkisan.gov.in/Documents/RevisedFAQ.pdf"
+        }
+      ],
+      "grounding_status": "GROUNDED",
+      "citation_correctness": "CORRECT",
+      "notes": "Answer is fully supported by retrieved context and attached verified citations."
+    },
+    {
+      "query": "Who is eligible for PM Kisan?",
+      "retrieved_documents": [
+        "PM Kissan Yojna - Frequently Asked Questions",
+        "PM Kissan Yojna - Frequently Asked Questions",
+        "PM Kissan Yojna - Frequently Asked Questions",
+        "PM Kissan Yojna - Frequently Asked Questions",
+        "PM Kissan Yojna - Frequently Asked Questions"
+      ],
+      "retrieved_sections": [
+        "Section 4",
+        "Section 5",
+        "Section 5",
+        "Section 01",
+        "Section 5"
+      ],
+      "reranker_scores": [
+        0.8923,
+        0.8897,
+        0.5971,
+        0.5822,
+        0.4582
+      ],
+      "answer": "Land holding farmer families are generally eligible for the PM-Kisan scheme, provided they do not fall under specific exclusion categories of higher economic status. Beneficiaries who inherit land due to the death of a landowner or whose families become freshly eligible post-inheritance may also qualify, subject to the scheme's guidelines and verification procedures. Specific identification procedures and certification requirements apply to certain regions like Nagaland and Jharkhand.",
+      "limitations": "The provided sources only detail who is *excluded* from the scheme and certain procedures for specific states or inheritance scenarios; they do not provide a complete, standalone list of all positive eligibility criteria or general prerequisites required for all farmers.",
+      "citation_count": 5,
+      "citations": [
+        {
+          "source_id": "PM_Kissan_faq_section_4_5",
+          "document_title": "PM Kissan Yojna - Frequently Asked Questions",
+          "section": "Section 4",
+          "page_start": 2,
+          "page_end": 3,
+          "source_url": "https://pmkisan.gov.in/Documents/RevisedFAQ.pdf"
+        },
+        {
+          "source_id": "PM_Kissan_faq_section_5_16",
+          "document_title": "PM Kissan Yojna - Frequently Asked Questions",
+          "section": "Section 5",
+          "page_start": 4,
+          "page_end": 5,
+          "source_url": "https://pmkisan.gov.in/Documents/RevisedFAQ.pdf"
+        },
+        {
+          "source_id": "PM_Kissan_faq_section_5_21",
+          "document_title": "PM Kissan Yojna - Frequently Asked Questions",
+          "section": "Section 5",
+          "page_start": 5,
+          "page_end": 6,
+          "source_url": "https://pmkisan.gov.in/Documents/RevisedFAQ.pdf"
+        },
+        {
+          "source_id": "PM_Kissan_faq_section_01_17",
+          "document_title": "PM Kissan Yojna - Frequently Asked Questions",
+          "section": "Section 01",
+          "page_start": 5,
+          "page_end": 5,
+          "source_url": "https://pmkisan.gov.in/Documents/RevisedFAQ.pdf"
+        },
+        {
+          "source_id": "PM_Kissan_faq_section_5_22",
+          "document_title": "PM Kissan Yojna - Frequently Asked Questions",
+          "section": "Section 5",
+          "page_start": 6,
+          "page_end": 6,
+          "source_url": "https://pmkisan.gov.in/Documents/RevisedFAQ.pdf"
+        }
+      ],
+      "grounding_status": "GROUNDED",
+      "citation_correctness": "CORRECT",
+      "notes": "Answer is fully supported by retrieved context and attached verified citations."
+    },
+    {
+      "query": "What rights does a consumer have?",
+      "retrieved_documents": [
+        "Consumer Protection Act, 2019",
+        "Consumer Protection Act, 2019",
+        "Consumer Protection Act, 2019",
+        "Consumer Protection Act, 2019",
+        "Consumer Protection Act, 2019"
+      ],
+      "retrieved_sections": [
+        "Section 2",
+        "Section 17",
+        "Section 18",
+        "Section 2",
+        "Section 16"
+      ],
+      "reranker_scores": [
+        0.9044,
+        0.4103,
+        0.4094,
+        0.3866,
+        0.1866
+      ],
+      "answer": "According to the Consumer Protection Act, 2019, consumer rights include:\n1. The right to be protected against the marketing of goods, products, or services that are hazardous to life and property.\n2. The right to be informed about the quality, quantity, potency, purity, standard, and price of goods, products, or services to protect against unfair trade practices.\n3. The right to be assured, wherever possible, of access to a variety of goods, products, or services at competitive prices.\n4. The right to be heard and to be assured that consumer interests will receive due consideration at appropriate fora.\n5. The right to seek redressal against unfair trade practices, restrictive trade practices, or unscrupulous exploitation.\n6. The right to consumer awareness.",
+      "limitations": null,
+      "citation_count": 1,
+      "citations": [
+        {
+          "source_id": "consumer_protection_act_2019_section_2_4",
+          "document_title": "Consumer Protection Act, 2019",
+          "section": "Section 2",
+          "page_start": 3,
+          "page_end": 4,
+          "source_url": "https://ncdrc.nic.in/bare_acts/CPA2019.pdf"
+        }
+      ],
+      "grounding_status": "GROUNDED",
+      "citation_correctness": "CORRECT",
+      "notes": "Answer is fully supported by retrieved context and attached verified citations."
+    },
+    {
+      "query": "Who is eligible for PM Kisan?",
+      "retrieved_documents": [
+        "PM Kissan Yojna - Frequently Asked Questions",
+        "PM Kissan Yojna - Frequently Asked Questions",
+        "PM Kissan Yojna - Frequently Asked Questions",
+        "PM Kissan Yojna - Frequently Asked Questions",
+        "PM Kissan Yojna - Frequently Asked Questions"
+      ],
+      "retrieved_sections": [
+        "Section 4",
+        "Section 5",
+        "Section 5",
+        "Section 01",
+        "Section 5"
+      ],
+      "reranker_scores": [
+        0.8923,
+        0.8897,
+        0.5971,
+        0.5822,
+        0.4582
+      ],
+      "answer": "Land holding farmer families are generally eligible for the PM-Kisan scheme, subject to specific conditions and exclusions based on economic status. Survivors of a deceased landowner or inheritors may also be eligible if they meet the scheme's criteria and guidelines following inheritance. In specific regions like Nagaland and Jharkhand, distinct identification procedures involving local authorities and certifications apply to determine bona fide beneficiaries, provided they are subject to the scheme's standard exclusion criteria. \n\nHowever, beneficiaries of higher economic status are strictly excluded from the scheme. The excluded categories include:\n- All institutional landholders.\n- Farmer families with one or more members who are former or present holders of constitutional posts, ministers, state ministers, members of Parliament (Lok Sabha/Rajya Sabha), state legislative assemblies, state legislative councils, mayors of municipal corporations, or chairpersons of district panchayats.\n- Serving or retired officers and employees of Central/State Government ministries, offices, departments, field units, public sector enterprises (PSEs), autonomous institutions, and regular employees of local bodies (excluding Multi-Tasking Staff, Class IV, or Group D employees).\n- Superannuated or retired pensioners receiving a monthly pension of Rs. 10,000 or more (excluding Multi-Tasking Staff, Class IV, or Group D employees).\n- Individuals who paid income tax in the last assessment year.\n- Professionals such as doctors, engineers, lawyers, chartered accountants, and architects who are registered with professional bodies and actively practicing.\n- Non-resident Indians (NRIs) who are land-holding farmer families under the Income Tax Act, 1961.",
+      "limitations": "The provided sources detail who is excluded from the scheme and certain state-specific identification processes (such as for Nagaland and Jharkhand) or inheritance updates, but they do not provide a complete, exhaustive checklist of all positive eligibility requirements beyond identifying land-holding farmer families.",
+      "citation_count": 4,
+      "citations": [
+        {
+          "source_id": "PM_Kissan_faq_section_4_5",
+          "document_title": "PM Kissan Yojna - Frequently Asked Questions",
+          "section": "Section 4",
+          "page_start": 2,
+          "page_end": 3,
+          "source_url": "https://pmkisan.gov.in/Documents/RevisedFAQ.pdf"
+        },
+        {
+          "source_id": "PM_Kissan_faq_section_5_16",
+          "document_title": "PM Kissan Yojna - Frequently Asked Questions",
+          "section": "Section 5",
+          "page_start": 4,
+          "page_end": 5,
+          "source_url": "https://pmkisan.gov.in/Documents/RevisedFAQ.pdf"
+        },
+        {
+          "source_id": "PM_Kissan_faq_section_5_21",
+          "document_title": "PM Kissan Yojna - Frequently Asked Questions",
+          "section": "Section 5",
+          "page_start": 5,
+          "page_end": 6,
+          "source_url": "https://pmkisan.gov.in/Documents/RevisedFAQ.pdf"
+        },
+        {
+          "source_id": "PM_Kissan_faq_section_5_22",
+          "document_title": "PM Kissan Yojna - Frequently Asked Questions",
+          "section": "Section 5",
+          "page_start": 6,
+          "page_end": 6,
+          "source_url": "https://pmkisan.gov.in/Documents/RevisedFAQ.pdf"
+        }
+      ],
+      "grounding_status": "GROUNDED",
+      "citation_correctness": "CORRECT",
+      "notes": "Answer is fully supported by retrieved context and attached verified citations."
+    },
+    {
+      "query": "What rights does a consumer have?",
+      "retrieved_documents": [
+        "Consumer Protection Act, 2019",
+        "Consumer Protection Act, 2019",
+        "Consumer Protection Act, 2019",
+        "Consumer Protection Act, 2019",
+        "Consumer Protection Act, 2019"
+      ],
+      "retrieved_sections": [
+        "Section 2",
+        "Section 17",
+        "Section 18",
+        "Section 2",
+        "Section 16"
+      ],
+      "reranker_scores": [
+        0.9044,
+        0.4103,
+        0.4094,
+        0.3866,
+        0.1866
+      ],
+      "answer": "According to the Consumer Protection Act, 2019, consumer rights include:\n1. The right to be protected against the marketing of goods, products, or services that are hazardous to life and property.\n2. The right to be informed about the quality, quantity, potency, purity, standard, and price of goods, products, or services to protect the consumer against unfair trade practices.\n3. The right to be assured, wherever possible, access to a variety of goods, products, or services at competitive prices.\n4. The right to be heard and to be assured that the consumer's interests will receive due consideration at appropriate fora.\n5. The right to seek redressal against unfair trade practices, restrictive trade practices, or unscrupulous exploitation of consumers.\n6. The right to consumer awareness.",
+      "limitations": null,
+      "citation_count": 1,
+      "citations": [
+        {
+          "source_id": "consumer_protection_act_2019_section_2_4",
+          "document_title": "Consumer Protection Act, 2019",
+          "section": "Section 2",
+          "page_start": 3,
+          "page_end": 4,
+          "source_url": "https://ncdrc.nic.in/bare_acts/CPA2019.pdf"
+        }
+      ],
+      "grounding_status": "GROUNDED",
+      "citation_correctness": "CORRECT",
+      "notes": "Answer is fully supported by retrieved context and attached verified citations."
+    },
+    {
+      "query": "What is the penalty for violating a PM Kisan requirement?",
+      "retrieved_documents": [
+        "PM Kissan Yojna - Frequently Asked Questions",
+        "PM Kissan Yojna - Frequently Asked Questions",
+        "PM Kissan Yojna - Frequently Asked Questions",
+        "PM Kissan Yojna - Frequently Asked Questions",
+        "Consumer Protection Act, 2019"
+      ],
+      "retrieved_sections": [
+        "Section 5",
+        "Section 5",
+        "Section 4",
+        "Section 01",
+        "Section 88"
+      ],
+      "reranker_scores": [
+        0.0854,
+        0.0501,
+        0.0449,
+        0.0286,
+        0.0281
+      ],
+      "answer": "Based on the provided legal and civic sources, there is no mention of penalties for violating a PM Kisan requirement.",
+      "limitations": "The retrieved sources do not contain information regarding penalties or punishments for violating PM Kisan requirements.",
+      "citation_count": 0,
+      "citations": [],
+      "grounding_status": "UNSUPPORTED",
+      "citation_correctness": "CORRECT",
+      "notes": "Correctly acknowledged that context is insufficient without inventing rules."
+    },
+    {
+      "query": "Can I appeal a PM Kisan rejection?",
+      "retrieved_documents": [
+        "PM Kissan Yojna - Frequently Asked Questions",
+        "PM Kissan Yojna - Frequently Asked Questions",
+        "PM Kissan Yojna - Frequently Asked Questions",
+        "PM Kissan Yojna - Frequently Asked Questions",
+        "PM Kissan Yojna - Frequently Asked Questions"
+      ],
+      "retrieved_sections": [
+        "Section 5",
+        "Section 5",
+        "Section 01",
+        "Section 4",
+        "Section 9"
+      ],
+      "reranker_scores": [
+        0.06,
+        0.032,
+        0.0261,
+        0.0115,
+        0.0112
+      ],
+      "answer": "The provided legal sources do not contain information regarding whether or how you can appeal a rejection under the PM-Kisan scheme.",
+      "limitations": "The retrieved sources do not provide any details on an appeal process, grievance redressal, or mechanisms to challenge a rejected application or discontinuation of benefits under the PM-Kisan scheme.",
+      "citation_count": 0,
+      "citations": [],
+      "grounding_status": "UNSUPPORTED",
+      "citation_correctness": "CORRECT",
+      "notes": "Correctly acknowledged that context is insufficient without inventing rules."
+    },
+    {
+      "query": "What is the deadline for filing this application?",
+      "retrieved_documents": [
+        "Consumer Protection Act, 2019",
+        "Consumer Protection Act, 2019",
+        "PM Kissan Yojna - Frequently Asked Questions",
+        "PM Kissan Yojna - Frequently Asked Questions",
+        "Consumer Protection Act, 2019"
+      ],
+      "retrieved_sections": [
+        "Section 101",
+        "Section 52",
+        "Section 31",
+        "Section 5",
+        "Section 65"
+      ],
+      "reranker_scores": [
+        0.0598,
+        0.0301,
+        0.0265,
+        0.0187,
+        0.0097
+      ],
+      "answer": "The provided legal sources do not contain information regarding a specific deadline for filing \"this application.\"",
+      "limitations": "The retrieved sources mention deadlines or timeframes related to other matters (such as disposing of an appeal within ninety days or a cut-off date for eligibility of beneficiaries), but do not specify any application filing deadline.",
+      "citation_count": 0,
+      "citations": [],
+      "grounding_status": "UNSUPPORTED",
+      "citation_correctness": "CORRECT",
+      "notes": "Correctly acknowledged that context is insufficient without inventing rules."
+    }
+  ]
+}

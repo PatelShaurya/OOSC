@@ -19,10 +19,10 @@ class LLMClient:
         model: Optional[str] = None,
         api_key: Optional[str] = None,
         temperature: float = 0.0,
-        timeout: float = 30.0
+        timeout: float = 60.0
     ):
         self.provider = (provider or os.getenv("LLM_PROVIDER") or "google").lower()
-        self.model = model or os.getenv("LLM_MODEL") or ("gemini-1.5-flash" if self.provider == "google" else "gpt-4o-mini")
+        self.model = model or os.getenv("LLM_MODEL") or ("gemini-3.5-flash-lite" if self.provider == "google" else "gpt-4o-mini")
         
         # Check provider-specific keys if general LLM_API_KEY is not set
         self.api_key = (
