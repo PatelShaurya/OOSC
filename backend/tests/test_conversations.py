@@ -5,9 +5,9 @@ def test_conversation_lifecycle_and_messaging(client: TestClient, auth_headers: 
     # 1. Create a conversation
     create_payload = {
         "title": "Property Dispute Query",
-        "category": "tenancy",
-        "jurisdiction": "Delhi",
-        "initial_message": "My landlord is withholding my security deposit without reason. What legal notice can I send?",
+        "category": "law",
+        "jurisdiction": None,
+        "initial_message": "What rights does a consumer have under the Consumer Protection Act?",
     }
     response = client.post("/api/v1/conversations", json=create_payload, headers=auth_headers)
     assert response.status_code == 201
@@ -30,7 +30,7 @@ def test_conversation_lifecycle_and_messaging(client: TestClient, auth_headers: 
 
     # 3. Send a follow-up message
     msg_payload = {
-        "content": "What is the time period under the Rent Control Act or Consumer Forum to reply?",
+        "content": "How can I file an RTI application under the Right to Information Act?",
         "language": "en",
     }
     msg_res = client.post(f"/api/v1/conversations/{conv_id}/messages", json=msg_payload, headers=auth_headers)

@@ -12,8 +12,9 @@ def get_test_settings() -> Settings:
         SUPABASE_URL="",
         SUPABASE_KEY="",
         SUPABASE_JWT_SECRET="test-secret-key-12345",
-        RAG_SERVICE_URL="http://localhost:8001",
+        RAG_SERVICE_URL="http://localhost:9999",
         RAG_API_KEY="",
+        RAG_TIMEOUT_SECONDS=0.5,
     )
 
 

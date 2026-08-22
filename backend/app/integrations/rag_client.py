@@ -1,5 +1,7 @@
 from typing import Any, Dict, List, Optional
 import httpx
+from pydantic import ValidationError
+
 from app.config import get_settings
 from app.schemas.rag import (
     Citation,
@@ -17,7 +19,7 @@ from app.utils.logger import logger
 class RAGClient:
     """
     HTTP Client communicating exclusively with the external RAG/AI microservice.
-    No RAG logic (vector search, chunking, embeddings) lives in this client.
+    No RAG logic (vector search, chunking, embeddings, generation) lives in this client.
     """
 
     def __init__(
@@ -25,11 +27,13 @@ class RAGClient:
         base_url: Optional[str] = None,
         api_key: Optional[str] = None,
         timeout: Optional[float] = None,
+        raise_on_error: bool = False,
     ):
         settings = get_settings()
         self.base_url = (base_url or settings.RAG_SERVICE_URL).rstrip("/")
         self.api_key = api_key or settings.RAG_API_KEY
         self.timeout = timeout or settings.RAG_TIMEOUT_SECONDS
+        self.raise_on_error = raise_on_error
 
     def _get_headers(self) -> Dict[str, str]:
         headers = {"Content-Type": "application/json"}
@@ -46,6 +50,71 @@ class RAGClient:
         except Exception:
             return False
 
+    async def query(
+        self,
+        query: str,
+        top_k: int = 5,
+        candidate_k: int = 10,
+        document_id: Optional[str] = None,
+        document_type: Optional[str] = None,
+        issuing_authority: Optional[str] = None,
+    ) -> RAGQueryResponse:
+        """
+        Sends natural-language query to the external RAG microservice REST endpoint POST /api/v1/query.
+        """
+        request_model = RAGQueryRequest(
+            query=query,
+            top_k=top_k,
+            candidate_k=candidate_k,
+            document_id=document_id,
+            document_type=document_type,
+            issuing_authority=issuing_authority,
+        )
+
+        url = f"{self.base_url}/api/v1/query"
+
+        try:
+            async with httpx.AsyncClient(timeout=self.timeout) as client:
+                response = await client.post(url, json=request_model.model_dump(), headers=self._get_headers())
+
+                if response.status_code == 200:
+                    try:
+                        data = response.json()
+                        payload = data.get("data", data)
+                        parsed = RAGQueryResponse(**payload)
+                        if not parsed.answer or not parsed.answer.strip():
+                            logger.warning("RAG service returned empty answer string.")
+                        return parsed
+                    except (ValueError, ValidationError) as exc:
+                        logger.error(f"Failed to parse RAG service response payload: {exc}")
+                        if self.raise_on_error:
+                            raise RAGServiceError(
+                                message="Invalid response format received from RAG service",
+                                details={"error": str(exc)},
+                            )
+                else:
+                    msg = f"RAG service returned HTTP {response.status_code}: {response.text}"
+                    logger.warning(msg)
+                    if self.raise_on_error:
+                        raise RAGServiceError(
+                            message=f"RAG service returned error status {response.status_code}",
+                            details={"status_code": response.status_code, "response": response.text},
+                        )
+
+        except httpx.TimeoutException as exc:
+            msg = f"RAG service request timed out after {self.timeout}s"
+            logger.error(msg)
+            if self.raise_on_error:
+                raise RAGServiceError(message=msg, details={"timeout": self.timeout})
+
+        except httpx.RequestError as exc:
+            msg = f"RAG service connection issue: {exc}"
+            logger.error(msg)
+            if self.raise_on_error:
+                raise RAGServiceError(message="Failed to connect to RAG service", details={"error": str(exc)})
+
+        return self._generate_fallback_query_response(query=query, category=document_type, jurisdiction=issuing_authority)
+
     async def query_legal_knowledge(
         self,
         query: str,
@@ -54,39 +123,20 @@ class RAGClient:
         language: str = "en",
         category: Optional[str] = None,
         extra_context: Optional[Dict[str, Any]] = None,
+        top_k: int = 5,
+        candidate_k: int = 10,
     ) -> RAGQueryResponse:
         """
-        Sends user query and chat history to RAG service to obtain legal guidance with statutory citations.
+        Adapter method maintaining backward compatibility with ConversationService.
+        Forwards query parameters to query().
         """
-        request_payload = RAGQueryRequest(
+        return await self.query(
             query=query,
-            conversation_history=conversation_history or [],
-            state_jurisdiction=jurisdiction,
-            language=language,
-            category=category,
-            extra_context=extra_context,
-        ).model_dump()
-
-        url = f"{self.base_url}/api/v1/query"
-
-        try:
-            async with httpx.AsyncClient(timeout=self.timeout) as client:
-                response = await client.post(url, json=request_payload, headers=self._get_headers())
-
-                if response.status_code == 200:
-                    data = response.json()
-                    # Support both { data: {...} } envelope and direct payload
-                    payload = data.get("data", data)
-                    return RAGQueryResponse(**payload)
-                else:
-                    logger.warning(
-                        f"RAG service returned status {response.status_code}: {response.text}. Falling back to default response."
-                    )
-        except httpx.RequestError as exc:
-            logger.warning(f"RAG service connection issue ({exc}). Using fallback assistant response.")
-
-        # Resilient fallback for local testing / when RAG service is booting
-        return self._generate_fallback_query_response(query=query, category=category, jurisdiction=jurisdiction)
+            top_k=top_k,
+            candidate_k=candidate_k,
+            document_type=category,
+            issuing_authority=jurisdiction,
+        )
 
     async def generate_complaint_document(
         self,
@@ -125,10 +175,19 @@ class RAGClient:
                     return RAGDocumentGenerationResponse(**payload)
                 else:
                     logger.warning(f"RAG service draft generation error: {response.text}")
+                    if self.raise_on_error:
+                        raise RAGServiceError(
+                            message=f"Document generation returned status {response.status_code}",
+                            details={"response": response.text},
+                        )
+        except httpx.TimeoutException:
+            if self.raise_on_error:
+                raise RAGServiceError(message="Document generation timed out")
         except httpx.RequestError as exc:
-            logger.warning(f"RAG service unreachable for document generation ({exc}). Using fallback template.")
+            logger.warning(f"RAG service unreachable for document generation ({exc}).")
+            if self.raise_on_error:
+                raise RAGServiceError(message="Failed to connect to RAG service for document generation")
 
-        # Fallback generated document template
         return self._generate_fallback_document_response(
             document_type=document_type,
             applicant=applicant_details,
@@ -165,7 +224,6 @@ class RAGClient:
         except httpx.RequestError:
             pass
 
-        # Fallback field extractor
         return RAGFormFieldExtractionResponse(
             extracted_fields={"notes": user_input},
             next_question=f"Please provide any remaining details regarding your {form_type.replace('_', ' ')}.",
@@ -181,26 +239,35 @@ class RAGClient:
         cat = category or "General Civic & Legal Rights"
 
         return RAGQueryResponse(
+            query=query,
             answer=(
                 f"Regarding your query on '{query}': Under applicable {jur} laws and civic procedures, "
                 f"citizens have legal recourse through the relevant administrative and appellate bodies. "
                 f"For {cat}, you may seek information via an RTI Application, file a complaint before the designated ombudsman or consumer commission, "
                 f"or issue a formal grievance notice."
             ),
+            limitations="RAG service operating in offline fallback mode.",
             citations=[
                 Citation(
-                    source_title="Right to Information Act, 2005",
+                    source_id="rti_act_2005_section_6_38",
+                    document_id="rti_act_2005",
+                    document_title="Right to Information Act, 2005",
+                    document_type="law",
+                    issuing_authority="Government of India",
                     section="Section 6(1)",
-                    act_or_law_name="RTI Act",
-                    confidence_score=0.92,
-                    excerpt="A person who desires to obtain any information under this Act shall make a request in writing...",
+                    page_start=10,
+                    page_end=11,
+                    source_url="https://cic.gov.in/sites/default/files/RTI-Act_English.pdf",
                 ),
                 Citation(
-                    source_title="Consumer Protection Act, 2019",
+                    source_id="consumer_protection_act_2019_section_35_44",
+                    document_id="consumer_protection_act_2019",
+                    document_title="Consumer Protection Act, 2019",
+                    document_type="law",
+                    issuing_authority="Parliament of India",
                     section="Section 35",
-                    act_or_law_name="Consumer Protection Act",
-                    confidence_score=0.88,
-                    excerpt="A complaint in relation to any goods sold or delivered or agreed to be sold or delivered or any service provided...",
+                    page_start=18,
+                    page_end=19,
                 ),
             ],
             suggested_followups=[
