@@ -24,6 +24,7 @@ class RetrievalResult(BaseModel):
     chunk_index: Optional[int] = None
     text: str
     similarity_score: float = Field(..., description="Cosine similarity score between 0.0 and 1.0 (higher is better)")
+    rerank_score: Optional[float] = Field(default=None, description="Cross-encoder reranker score (higher is better)")
 
 
 class RetrievalResponse(BaseModel):
