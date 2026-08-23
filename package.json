@@ -4,8 +4,8 @@
   "private": true,
   "description": "CivicAI Platform - Action-Oriented Civic Guidance & RTI Agent",
   "scripts": {
-    "build": "cd frontend && npm install && npm run build",
-    "vercel-build": "cd frontend && npm install && npm run build",
+    "build": "cd frontend && npm install --legacy-peer-deps && npm run build",
+    "vercel-build": "cd frontend && npm install --legacy-peer-deps && npm run build",
     "start": "cd frontend && npm run start"
   }
 }
