@@ -1,0 +1,3 @@
+# Landing Motion Review
+
+The revised landing sequence now presents each narrative block as a single, settled arrival rather than continuously scrubbing every child against scroll position. The desktop mid-scroll capture shows a clean handoff from the final method chapter into the wayfinding section, with the route line acting as a connective cue instead of competing with the typography. The mobile capture preserves the same hierarchy: the chapter close, divider, and wayfinding heading lead naturally into the route list without collapsing text or animation layers. Browser verification confirms all seven reveal targets appear by the end of scrolling, while reduced-motion users see the full landing immediately.

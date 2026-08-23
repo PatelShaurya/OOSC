@@ -1,0 +1,7 @@
+# Replayable Scroll Motion Review
+
+The landing motion now removes the visible state when a section exits the observer viewport and reapplies it when the section returns, allowing the same reveal to play again when a user scrolls upward and then downward. Browser checks confirmed this reset-and-replay behavior at desktop and mobile widths. The shared reveal hook is also active across the dashboard, assistant, rights navigator, document library, document form, and document preview. Desktop and mobile visual reviews confirmed that the settled layouts remain legible and stable across those routes. Reduced-motion mode keeps the motion-ready class disabled and renders all marked sections immediately.
+
+Mobile scroll-through verification also confirmed that the dashboard activity, assistant case section, rights options, document library, and document preview paper enter the visible state as users move to them. An assistant case section was then scrolled past, reset to its hidden state, and successfully replayed when brought back into the viewport.
+
+For long mobile routes, the motion targets are now granular rather than only wrapping the whole panel. The sixth Rights option, the third document row, and the final document-preview paragraph each started hidden and entered the visible state only after being scrolled into view. This preserves a usable page at rest while proving that the offscreen reveal system operates throughout the workflows.

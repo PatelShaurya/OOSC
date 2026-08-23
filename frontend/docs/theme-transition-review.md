@@ -1,0 +1,3 @@
+# Theme Transition Visual Review
+
+The mid-animation desktop capture shows that the dark transition has clear shutter depth, amber edge lines, and an obvious eclipse-like signal near the theme control. The initial light-direction frame was too pale because the moving panels blended into the incoming ivory surface. It was revised into a charcoal inverse sweep with bright amber and ivory signal details, giving both directions clear definition before the interface settles. Final desktop and mobile captures confirm that the settled light and dark interfaces remain readable, with the active Sun/Light and Moon/Dark indicator intact.

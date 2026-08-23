@@ -27,7 +27,7 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as api from "@/lib/api";
 
-const mark = "/manus-storage/civicai-mark_e34e81de.png";
+const mark = "/manus-storage/disha-logo.jpg";
 const hero = "/manus-storage/civicai-hero_08940d4f.jpg";
 const wayfinding = "/manus-storage/civicai-wayfinding_01330149.jpg";
 type Category = { id: string; name: string; description: string; choices: string[] };
@@ -51,8 +51,8 @@ const categories: Category[] = [
 ];
 
 const exampleSources = [
-  ["Prototype source · Tenancy guidance", "Nyaya Research Desk", "Example explainer", "Deposit disputes · Section 2"],
-  ["Prototype source · Consumer remedies", "Nyaya Research Desk", "Example explainer", "Refunds · Section 1"],
+  ["Prototype source · Tenancy guidance", "Disha Research Desk", "Example explainer", "Deposit disputes · Section 2"],
+  ["Prototype source · Consumer remedies", "Disha Research Desk", "Example explainer", "Refunds · Section 1"],
 ];
 
 function getStored<T>(key: string, fallback: T): T {
@@ -112,11 +112,11 @@ function Layout({ children }: { children: React.ReactNode }) {
   const nav = [["Home", "/landing"], ["Workspace", "/dashboard"], ["Assistant", "/assistant"], ["Rights", "/rights"], ["Documents", "/documents"]];
 
   useEffect(() => {
-    const saved = window.localStorage.getItem("nyaya-theme");
+    const saved = window.localStorage.getItem("disha-theme");
     const requested = new URLSearchParams(window.location.search).get("theme");
     setDark(requested === "dark" || (requested !== "light" && saved === "dark"));
   }, []);
-  useEffect(() => { window.localStorage.setItem("nyaya-theme", dark ? "dark" : "light"); }, [dark]);
+  useEffect(() => { window.localStorage.setItem("disha-theme", dark ? "dark" : "light"); }, [dark]);
   useEffect(() => () => { if (themeTransitionTimer.current) window.clearTimeout(themeTransitionTimer.current); }, []);
   function toggleTheme() {
     const nextDark = !dark;
@@ -132,7 +132,7 @@ function Layout({ children }: { children: React.ReactNode }) {
     <div className="theme-veil" aria-hidden="true">{themeTransition && <><span className="theme-veil-panel theme-veil-panel-one"></span><span className="theme-veil-panel theme-veil-panel-two"></span><span className="theme-veil-panel theme-veil-panel-three"></span><span className="theme-veil-core"></span><span className="theme-veil-scan"></span><span className="theme-veil-mode">{themeTransition === "to-dark" ? "DARK // 01" : "LIGHT // 01"}</span></>}</div>
     <a className="skip-link" href="#main-content">Skip to main content</a>
     <header className="site-header">
-      <div className="brand"><img src={mark} alt="" /><Link href="/landing">Nyaya</Link></div>
+      <div className="brand"><Link href="/landing" className="brand-link" aria-label="Disha Home"><img src={mark} alt="Disha" /><span className="brand-title">DISHA</span></Link></div>
       <nav className="desktop-nav">{nav.map(([label, href]) => <Link key={href} href={href} className={location === href ? "active" : ""}>{label}</Link>)}</nav>
       <div className="header-tools">
         <button aria-label="Search" onClick={() => setSearchOpen(true)}><Search size={18}/><span>Search</span></button>
@@ -141,9 +141,12 @@ function Layout({ children }: { children: React.ReactNode }) {
       </div>
     </header>
     {mobileOpen && <nav className="mobile-nav">{nav.map(([label, href]) => <Link key={href} href={href} onClick={() => setMobileOpen(false)}>{label}</Link>)}</nav>}
-    {searchOpen && <div className="utility-panel search-panel" role="dialog" aria-label="Search Nyaya"><div className="utility-panel-head"><span className="mono">GO TO</span><button onClick={() => setSearchOpen(false)} aria-label="Close search"><X size={16}/></button></div><div className="utility-links">{[["Workspace", "/dashboard"], ["Assistant", "/assistant"], ["Rights navigator", "/rights"], ["My documents", "/documents"]].map(([label, href]) => <Link href={href} key={href} onClick={() => setSearchOpen(false)}><Search size={14}/>{label}<ArrowRight size={14}/></Link>)}</div></div>}
+    {searchOpen && <div className="utility-panel search-panel" role="dialog" aria-label="Search Disha"><div className="utility-panel-head"><span className="mono">GO TO</span><button onClick={() => setSearchOpen(false)} aria-label="Close search"><X size={16}/></button></div><div className="utility-links">{[["Workspace", "/dashboard"], ["Assistant", "/assistant"], ["Rights navigator", "/rights"], ["My documents", "/documents"]].map(([label, href]) => <Link href={href} key={href} onClick={() => setSearchOpen(false)}><Search size={14}/>{label}<ArrowRight size={14}/></Link>)}</div></div>}
     {children}
-    <footer className="footer"><div className="brand"><img src={mark} alt=""/><span>Nyaya</span></div><p>From confusion to action.</p><span className="footer-note">A prototype civic service · Information is general, not legal advice.</span></footer>
+    <footer className="footer">
+      <div className="brand"><Link href="/landing" className="brand-link" aria-label="Disha Home"><img src={mark} alt="Disha"/><span className="brand-title">DISHA</span></Link></div>
+      <span className="footer-note">A prototype civic service · Information is general, not legal advice.</span>
+    </footer>
   </div>;
 }
 
@@ -158,7 +161,7 @@ function ProblemInput({ compact = false, initial = "", value: controlledValue, o
     if (!currentValue.trim()) { setError("Tell us a little about what happened before continuing."); return; }
     setIsSubmitting(true);
     const draftText = currentValue.trim();
-    window.localStorage.setItem("nyaya-case-draft", draftText);
+    window.localStorage.setItem("disha-case-draft", draftText);
     try {
       await api.analyzeRights(draftText);
       await api.createConversation("rights", "hinglish");
@@ -180,14 +183,14 @@ function Home() {
   const [heroProblem, setHeroProblem] = useState("");
   return <Layout><main id="main-content">
     <section className="hero" style={{ backgroundImage: `url(${hero})` }}>
-      <div className="hero-copy"><Eyebrow>A calmer way through complicated systems</Eyebrow><h1>Know what<br/><em>you can do next.</em></h1><p>Tell us what happened. We'll help you understand your options and figure out the next step.</p></div>
+      <div className="hero-copy"><Eyebrow>A calmer way through complicated systems</Eyebrow><h1>Know your rights.<br/><em>Find your way.</em></h1><p>Tell us what happened. We'll help you understand your options and figure out the next step.</p></div>
       <div className="hero-form"><ProblemInput value={heroProblem} onValueChange={setHeroProblem}/><div className="examples"><span>Try an example</span>{["My landlord hasn't returned my deposit", "I want to file an RTI", "I was charged for something I didn't receive", "Do I qualify for a government scheme?"].map(text => <ExampleLink key={text} text={text} onSelect={setHeroProblem}/>)}</div></div>
     </section>
-    <section className="public-handoff scroll-replay"><div><Eyebrow>Your Nyaya workspace</Eyebrow><h2>Save your progress.<br/><em>Return when you need it.</em></h2><p>Keep your case notes, document drafts, and next steps together in this browser.</p></div><Link href="/dashboard" className="primary-btn">Open your dashboard<ArrowRight size={17}/></Link></section>
-    <section className="start-paths scroll-replay"><div className="start-paths-head"><Eyebrow>Choose your path</Eyebrow><h2>Start where<br/><em>you are.</em></h2><p>Every route leads back to a clear next action, not another dead end.</p></div><div className="path-grid">{[["01", "Start a case", "Tell Nyaya what happened and get a structured first view.", "/assistant"], ["02", "Explore rights", "Narrow a situation step by step before you decide what to do.", "/rights"], ["03", "Prepare a document", "Turn a clear record into a formal request or complaint.", "/documents/new"]].map(([number, title, copy, href]) => <Link href={href} className="path-card" key={number}><span className="mono">{number}</span><strong>{title}</strong><p>{copy}</p><ArrowRight size={18}/></Link>)}</div></section>
+    <section className="public-handoff scroll-replay"><div><Eyebrow>Your Disha workspace</Eyebrow><h2>Save your progress.<br/><em>Return when you need it.</em></h2><p>Keep your case notes, document drafts, and next steps together in this browser.</p></div><Link href="/dashboard" className="primary-btn">Open your dashboard<ArrowRight size={17}/></Link></section>
+    <section className="start-paths scroll-replay"><div className="start-paths-head"><Eyebrow>Choose your path</Eyebrow><h2>Start where<br/><em>you are.</em></h2><p>Every route leads back to a clear next action, not another dead end.</p></div><div className="path-grid">{[["01", "Start a case", "Tell Disha what happened and get a structured first view.", "/assistant"], ["02", "Explore rights", "Narrow a situation step by step before you decide what to do.", "/rights"], ["03", "Prepare a document", "Turn a clear record into a formal request or complaint.", "/documents/new"]].map(([number, title, copy, href]) => <Link href={href} className="path-card" key={number}><span className="mono">{number}</span><strong>{title}</strong><p>{copy}</p><ArrowRight size={18}/></Link>)}</div></section>
     <section className="section directory scroll-replay"><div className="section-lead"><Eyebrow>Explore by situation</Eyebrow><h2>What are you<br/><em>dealing with?</em></h2></div><div className="category-list">{categories.map(category => <Link href="/rights" className="category-row" key={category.name}><span className="mono">{category.id}</span><strong>{category.name}</strong><span className="category-desc">{category.description}</span><ArrowUpRight size={21}/></Link>)}</div></section>
     <section className="section process scroll-replay"><div><Eyebrow>A clear path forward</Eyebrow><h2>From confusion<br/>to <em>action.</em></h2></div><div className="steps">{[["01", "Tell us what happened"], ["02", "Understand your situation"], ["03", "See your options"], ["04", "Take the next step"]].map(([number, label], index) => <div className="step" key={number}><span className="mono">{number}</span><span>{label}</span>{index < 3 && <span className="step-line"/>}</div>)}</div></section>
-    <section className="section value-story scroll-replay"><div><Eyebrow>What Nyaya does</Eyebrow><h2>Make the system<br/><em>less opaque.</em></h2></div><div className="value-list">{[["01", "Understand complicated information", "Turn legal or bureaucratic language into a plain explanation."], ["02", "Know your options", "See possible actions, not only background information."], ["03", "Take action", "Prepare a clear document when a written request can help."], ["04", "Know the source", "Keep supporting material visible when it matters."]].map(([number, title, copy]) => <div className="value-row" key={number}><span className="mono">{number}</span><div><strong>{title}</strong><p>{copy}</p></div></div>)}</div></section>
+    <section className="section value-story scroll-replay"><div><Eyebrow>What Disha does</Eyebrow><h2>Make the system<br/><em>less opaque.</em></h2></div><div className="value-list">{[["01", "Understand complicated information", "Turn legal or bureaucratic language into a plain explanation."], ["02", "Know your options", "See possible actions, not only background information."], ["03", "Take action", "Prepare a clear document when a written request can help."], ["04", "Know the source", "Keep supporting material visible when it matters."]].map(([number, title, copy]) => <div className="value-row" key={number}><span className="mono">{number}</span><div><strong>{title}</strong><p>{copy}</p></div></div>)}</div></section>
     <section className="image-band scroll-replay" style={{ backgroundImage: `url(${wayfinding})` }}><div><Eyebrow>Built for real questions</Eyebrow><h2>Good information<br/><em>changes what is possible.</em></h2><Link href="/rights" className="text-link">Explore your rights <ArrowRight size={16}/></Link></div></section>
     <section className="final-cta scroll-replay"><div><Eyebrow>A practical first step</Eyebrow><h2>Not sure where to start?<br/><em>Start with what happened.</em></h2></div><Link href="/dashboard" className="primary-btn">Tell us your problem<ArrowRight size={17}/></Link></section>
   </main></Layout>;
@@ -196,7 +199,7 @@ function Home() {
 function LandingPage() {
   const [, navigate] = useLocation();
   const [activeChapter, setActiveChapter] = useState(0);
-  const chapters = [["01", "Begin with what happened.", "Use everyday language. Nyaya helps you identify the part of the system you are dealing with."], ["02", "See a clear route forward.", "Understand your situation, useful records, and practical options before you commit to an action."], ["03", "Put the next step in writing.", "Create and keep a structured request, complaint, or information record in your workspace."]];
+  const chapters = [["01", "Begin with what happened.", "Use everyday language. Disha helps you identify the part of the system you are dealing with."], ["02", "See a clear route forward.", "Understand your situation, useful records, and practical options before you commit to an action."], ["03", "Put the next step in writing.", "Create and keep a structured request, complaint, or information record in your workspace."]];
   useEffect(() => {
     const progress = document.querySelector<HTMLElement>(".landing-progress span");
     let frame = 0;
@@ -223,11 +226,11 @@ function LandingPage() {
   function enterWorkspace() { navigate("/dashboard"); }
   return <Layout><main id="main-content" className="landing-page">
     <div className="landing-progress" aria-hidden="true"><span style={{ "--landing-progress": String((activeChapter + 1) / chapters.length) } as React.CSSProperties}/></div>
-    <section className="landing-hero" style={{ backgroundImage: `url(${hero})` }}><div className="landing-hero-top"><span className="mono">NYAYA / CIVIC GUIDANCE</span><span className="mono">SCROLL TO EXPLORE ↓</span></div><div className="hero-civic-visual" aria-hidden="true"><span className="hero-visual-orbit orbit-one"></span><span className="hero-visual-orbit orbit-two"></span><span className="hero-route route-one"></span><span className="hero-route route-two"></span><div className="hero-visual-map"><img src={wayfinding} alt=""/></div><div className="hero-visual-card visual-card-one"><span className="mono">01 / CLARIFY</span><strong>Start with<br/>what happened.</strong></div><div className="hero-visual-card visual-card-two"><span className="mono">NEXT ROUTE</span><strong>Document<br/>your facts.</strong><i></i></div><div className="hero-visual-marker"><span></span><small>NYA / 01</small></div></div><div className="landing-hero-copy"><Eyebrow>A clearer route through public systems</Eyebrow><h1><span className="landing-hero-line">When the</span><br/><span className="landing-hero-line">system</span><br/><span className="landing-hero-emphasis">feels <em>too&nbsp;much,</em></span><br/><span className="landing-hero-line">start here.</span></h1><p>Nyaya helps people turn an unclear civic or legal problem into a practical next step.</p><div className="landing-hero-actions"><button className="primary-btn" onClick={enterWorkspace}>Open my dashboard<ArrowRight size={17}/></button><Link href="/start" className="secondary-link">See how it works</Link></div></div><div className="landing-side-note"><span className="mono">DESIGNED FOR THE MOMENT BEFORE YOU KNOW WHAT TO DO</span><span>↓</span></div></section>
-    <section className="landing-intro scroll-replay"><span className="mono">THE NYAYA METHOD</span><p>A civic guide for the practical questions that sit between <em>“something went wrong”</em> and <em>“what do I do now?”</em></p></section>
-    <section className="landing-chapter-wrap" aria-label="How Nyaya works">{chapters.map(([number, title, copy], index) => <article className={`landing-chapter scroll-replay reveal-step-${index + 1}`} key={number} onMouseEnter={() => setActiveChapter(index)} onFocus={() => setActiveChapter(index)} tabIndex={0}><div className="chapter-marker"><span className="mono">{number}</span><span className="chapter-dot"></span></div><div className="chapter-copy"><h2>{title}</h2><p>{copy}</p></div><div className="chapter-index mono">0{index + 1} / 03</div></article>)}</section>
+    <section className="landing-hero" style={{ backgroundImage: `url(${hero})` }}><div className="landing-hero-top"><span className="mono">DISHA / CIVIC GUIDANCE</span><span className="mono">SCROLL TO EXPLORE ↓</span></div><div className="hero-civic-visual" aria-hidden="true"><span className="hero-visual-orbit orbit-one"></span><span className="hero-visual-orbit orbit-two"></span><span className="hero-route route-one"></span><span className="hero-route route-two"></span><div className="hero-visual-map"><img src={wayfinding} alt=""/></div><div className="hero-visual-card visual-card-one"><span className="mono">01 / CLARIFY</span><strong>Start with<br/>what happened.</strong></div><div className="hero-visual-card visual-card-two"><span className="mono">NEXT ROUTE</span><strong>Document<br/>your facts.</strong><i></i></div><div className="hero-visual-marker"><span></span><small>DSH / 01</small></div></div><div className="landing-hero-copy"><Eyebrow>A clearer route through public systems</Eyebrow><h1><span className="landing-hero-line">When the</span><br/><span className="landing-hero-line">system</span><br/><span className="landing-hero-emphasis">feels <em>too&nbsp;much,</em></span><br/><span className="landing-hero-line">start here.</span></h1><p>Disha helps people turn an unclear civic or legal problem into a practical next step.</p><div className="landing-hero-actions"><button className="primary-btn" onClick={enterWorkspace}>Open my dashboard<ArrowRight size={17}/></button><Link href="/start" className="secondary-link">See how it works</Link></div></div><div className="landing-side-note"><span className="mono">DESIGNED FOR THE MOMENT BEFORE YOU KNOW WHAT TO DO</span><span>↓</span></div></section>
+    <section className="landing-intro scroll-replay"><span className="mono">THE DISHA METHOD</span><p>A civic guide for the practical questions that sit between <em>“something went wrong”</em> and <em>“what do I do now?”</em></p></section>
+    <section className="landing-chapter-wrap" aria-label="How Disha works">{chapters.map(([number, title, copy], index) => <article className={`landing-chapter scroll-replay reveal-step-${index + 1}`} key={number} onMouseEnter={() => setActiveChapter(index)} onFocus={() => setActiveChapter(index)} tabIndex={0}><div className="chapter-marker"><span className="mono">{number}</span><span className="chapter-dot"></span></div><div className="chapter-copy"><h2>{title}</h2><p>{copy}</p></div><div className="chapter-index mono">0{index + 1} / 03</div></article>)}</section>
     <section className="landing-wayfinding scroll-replay"><div className="wayfinding-copy"><Eyebrow>Choose a starting point</Eyebrow><h2>What brings<br/>you <em>here?</em></h2><p>Choose a route, not a rigid form. You can always take one step at a time.</p></div><div className="wayfinding-links">{[["I need to understand a problem", "Start a case", "/start"], ["I want to explore my options", "Rights Navigator", "/rights"], ["I need to prepare a document", "Document workspace", "/documents/new"]].map(([label, action, href], index) => <Link href={href} key={label} className="wayfinding-link"><span className="mono">0{index + 1}</span><div><strong>{label}</strong><small>{action}</small></div><ArrowRight size={19}/></Link>)}</div></section>
-    <section className="landing-promise scroll-replay"><div className="promise-door"><img src={mark} alt=""/></div><div><Eyebrow>Not another chatbot</Eyebrow><h2>Less searching.<br/>More <em>knowing what to do.</em></h2><p>Nyaya turns a confusing question into understandable information, possible options, the records you may need, and an action you can actually take.</p></div></section>
+    <section className="landing-promise scroll-replay"><div className="promise-door"><img src={mark} alt="Disha"/></div><div><Eyebrow>Not another chatbot</Eyebrow><h2>Less searching.<br/>More <em>knowing what to do.</em></h2><p>Disha turns a confusing question into understandable information, possible options, the records you may need, and an action you can actually take.</p></div></section>
     <section className="landing-final scroll-replay"><span className="mono">YOUR NEXT STEP IS ALREADY HERE</span><h2>Start with the<br/><em>one thing you know.</em></h2><button className="primary-btn" onClick={enterWorkspace}>Go to my dashboard<ArrowRight size={17}/></button></section>
   </main></Layout>;
 }
@@ -238,7 +241,7 @@ function ExampleLink({ text, onSelect }: { text: string; onSelect: (value: strin
 
 function Dashboard() {
   const [draft, setDraft] = useState("");
-  useEffect(() => setDraft(getStored("nyaya-case-draft", "")), []);
+  useEffect(() => setDraft(getStored("disha-case-draft", "")), []);
   const recent = useMemo(() => [["Consumer complaint", "Complaint · Today", "/documents/complaint"], ["RTI application", "RTI · Yesterday", "/documents/rti"], ["Tenant issue", "Housing · 3 days ago", "/assistant"]], []);
   return <Layout><main className="app-page">
     <div className="app-top scroll-replay"><div><Eyebrow>Your workspace</Eyebrow><h1>Good afternoon.</h1><p>What can we help you with?</p></div><span className="date-note">FRIDAY · 22 AUG 2026</span></div>
@@ -256,7 +259,7 @@ function Assistant() {
   const [apiResult, setApiResult] = useState<api.RightsAnalysis | null>(null);
 
   useEffect(() => {
-    const draft = getStored("nyaya-case-draft", "My landlord hasn't returned my security deposit.");
+    const draft = getStored("disha-case-draft", "My landlord hasn't returned my security deposit.");
     setCaseDraft(draft);
     setIsAnalyzing(true);
     api.analyzeRights(draft).then(res => {
@@ -314,7 +317,7 @@ function Sources() {
     api.getSource("src_001").then(res => {
       if (res.success && res.data) {
         setSources([
-          [res.data.title, "Nyaya Research Desk", res.data.document_type || "Example explainer", `${res.data.section || "Section X"} · Page ${res.data.page || 12}`],
+          [res.data.title, "Disha Research Desk", res.data.document_type || "Example explainer", `${res.data.section || "Section X"} · Page ${res.data.page || 12}`],
           ...exampleSources.slice(1),
         ]);
       }
@@ -335,7 +338,7 @@ function Rights() {
     }
   }, [category, choice]);
 
-  function startAssistant() { window.localStorage.setItem("nyaya-case-draft", `${category?.name}: ${choice}`); navigate("/assistant"); }
+  function startAssistant() { window.localStorage.setItem("disha-case-draft", `${category?.name}: ${choice}`); navigate("/assistant"); }
   return <Layout><main className="app-page rights-page">
     <section className="page-intro scroll-replay"><Eyebrow>Rights navigator</Eyebrow><h1>{choice ? "Here is a sensible place to start." : category ? "Let's narrow this down." : "Find your way through the system."}</h1><p>{choice ? "This result is a starting point for your next practical action, not a substitute for verified local advice." : category ? "Choose the part of the issue that is closest to your situation." : "Start with the kind of situation you're dealing with. We'll take it one step at a time."}</p></section>
     {!category && <div className="rights-options scroll-replay">{categories.map(item => <button className="scroll-replay" key={item.name} onClick={() => setCategory(item)}><span className="mono">{item.id}</span><strong>{item.name}</strong><span>{item.description}</span><ArrowRight size={18}/></button>)}</div>}
@@ -348,7 +351,7 @@ function Documents(_props: any) {
   const newDoc = _props.newDoc ?? false;
   const [, navigate] = useLocation();
   const [step, setStep] = useState(1);
-  const initialDraft = getStored<DocumentDraft>("nyaya-document-draft", { title: "Consumer Complaint", name: "", person: "", issue: "", extra: "", createdAt: "22 August 2026" });
+  const initialDraft = getStored<DocumentDraft>("disha-document-draft", { title: "Consumer Complaint", name: "", person: "", issue: "", extra: "", createdAt: "22 August 2026" });
   const form = useForm<DocumentDraft>({ resolver: zodResolver(documentSchema), defaultValues: initialDraft, mode: "onTouched" });
   const { register, trigger, getValues, formState: { errors, isSubmitting } } = form;
   const draft = form.watch();
@@ -360,7 +363,7 @@ function Documents(_props: any) {
     if (!valid) return;
     const values = getValues();
     const nextDraft = { ...values, createdAt: new Date().toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" }) };
-    window.localStorage.setItem("nyaya-document-draft", JSON.stringify(nextDraft));
+    window.localStorage.setItem("disha-document-draft", JSON.stringify(nextDraft));
     try {
       const sessionRes = await api.createFormSession("consumer_complaint");
       if (sessionRes.success && sessionRes.data) {
@@ -375,7 +378,7 @@ function Documents(_props: any) {
           title: values.title || "Consumer Complaint",
         });
         if (compRes.success && compRes.data) {
-          window.localStorage.setItem("nyaya-complaint-result", JSON.stringify(compRes.data));
+          window.localStorage.setItem("disha-complaint-result", JSON.stringify(compRes.data));
         }
       }
     } catch {
@@ -383,16 +386,16 @@ function Documents(_props: any) {
     }
     window.setTimeout(() => navigate("/documents/complaint"), 420);
   }
-  if (newDoc) return <Layout><main className="app-page form-page" onKeyDown={handleDocumentKeyDown}><Link href="/documents" className="back"><ChevronLeft size={16}/> My documents</Link><div className="form-layout scroll-replay"><div><Eyebrow>New document · Step 0{step}</Eyebrow><h1>{step === 1 ? "Let's start with the basics." : step === 2 ? "Who is the complaint regarding?" : step === 3 ? "What happened?" : "Review the key details."}</h1><p className="form-help">A few details will help Nyaya make this document useful and specific.</p></div><div className="form-box">{step === 1 && <label>What's your full name?<input {...register("name")} aria-invalid={Boolean(errors.name)} placeholder="Your full name"/>{errors.name && <span className="field-error">{errors.name.message}</span>}</label>}{step === 2 && <label>Who is this regarding?<input {...register("person")} aria-invalid={Boolean(errors.person)} placeholder="Person, company, or office"/>{errors.person && <span className="field-error">{errors.person.message}</span>}</label>}{step === 3 && <label>What happened?<textarea {...register("issue")} aria-invalid={Boolean(errors.issue)} rows={7} placeholder="Use your own words. Include dates or amounts if you remember them."/>{errors.issue && <span className="field-error">{errors.issue.message}</span>}</label>}{step === 4 && <div className="document-review"><span className="mono">DOCUMENT SUMMARY</span><dl><dt>Prepared for</dt><dd>{draft.name || "To be added"}</dd><dt>Regarding</dt><dd>{draft.person || "To be added"}</dd><dt>Key facts</dt><dd>{draft.issue || "To be added"}</dd></dl><label>Anything else you'd like to include?<textarea {...register("extra")} rows={3} placeholder="Optional additional context"/></label></div>}<div className="form-actions">{step > 1 && <button className="back-btn" onClick={() => setStep(step - 1)}>Back</button>}{step < 4 ? <PrimaryButton onClick={nextStep}>Continue</PrimaryButton> : <button className="primary-btn" onClick={generate} disabled={isSubmitting}>Review and generate<ArrowRight size={17}/></button>}</div></div></div><div className="progress scroll-replay"><span style={{ width: `${step * 25}%` }}></span></div></main></Layout>;
-  const saved = getStored<DocumentDraft | null>("nyaya-document-draft", null);
+  if (newDoc) return <Layout><main className="app-page form-page" onKeyDown={handleDocumentKeyDown}><Link href="/documents" className="back"><ChevronLeft size={16}/> My documents</Link><div className="form-layout scroll-replay"><div><Eyebrow>New document · Step 0{step}</Eyebrow><h1>{step === 1 ? "Let's start with the basics." : step === 2 ? "Who is the complaint regarding?" : step === 3 ? "What happened?" : "Review the key details."}</h1><p className="form-help">A few details will help Disha make this document useful and specific.</p></div><div className="form-box">{step === 1 && <label>What's your full name?<input {...register("name")} aria-invalid={Boolean(errors.name)} placeholder="Your full name"/>{errors.name && <span className="field-error">{errors.name.message}</span>}</label>}{step === 2 && <label>Who is this regarding?<input {...register("person")} aria-invalid={Boolean(errors.person)} placeholder="Person, company, or office"/>{errors.person && <span className="field-error">{errors.person.message}</span>}</label>}{step === 3 && <label>What happened?<textarea {...register("issue")} aria-invalid={Boolean(errors.issue)} rows={7} placeholder="Use your own words. Include dates or amounts if you remember them."/>{errors.issue && <span className="field-error">{errors.issue.message}</span>}</label>}{step === 4 && <div className="document-review"><span className="mono">DOCUMENT SUMMARY</span><dl><dt>Prepared for</dt><dd>{draft.name || "To be added"}</dd><dt>Regarding</dt><dd>{draft.person || "To be added"}</dd><dt>Key facts</dt><dd>{draft.issue || "To be added"}</dd></dl><label>Anything else you'd like to include?<textarea {...register("extra")} rows={3} placeholder="Optional additional context"/></label></div>}<div className="form-actions">{step > 1 && <button className="back-btn" onClick={() => setStep(step - 1)}>Back</button>}{step < 4 ? <PrimaryButton onClick={nextStep}>Continue</PrimaryButton> : <button className="primary-btn" onClick={generate} disabled={isSubmitting}>Review and generate<ArrowRight size={17}/></button>}</div></div></div><div className="progress scroll-replay"><span style={{ width: `${step * 25}%` }}></span></div></main></Layout>;
+  const saved = getStored<DocumentDraft | null>("disha-document-draft", null);
   const rows = [[saved?.title || "Consumer Complaint", "Complaint · Today", "/documents/complaint"], ["RTI Application", "RTI · Yesterday", "/documents/rti"], ["Tenant Complaint", "Housing · 3 days ago", "/documents/tenant"]];
-  return <Layout><main className="app-page"><div className="app-top scroll-replay"><div><Eyebrow>Your library</Eyebrow><h1>My documents</h1><p>Documents you have prepared with Nyaya.</p></div><PrimaryButton href="/documents/new">Create a document</PrimaryButton></div><div className="document-list scroll-replay">{rows.map(([title, meta, href]) => <Link className="document-row scroll-replay" href={href} key={title}><FileText size={20}/><span><strong>{title}</strong><small>{meta}</small></span><span className="doc-status">Draft</span><ArrowUpRight size={17}/></Link>)}</div></main></Layout>;
+  return <Layout><main className="app-page"><div className="app-top scroll-replay"><div><Eyebrow>Your library</Eyebrow><h1>My documents</h1><p>Documents you have prepared with Disha.</p></div><PrimaryButton href="/documents/new">Create a document</PrimaryButton></div><div className="document-list scroll-replay">{rows.map(([title, meta, href]) => <Link className="document-row scroll-replay" href={href} key={title}><FileText size={20}/><span><strong>{title}</strong><small>{meta}</small></span><span className="doc-status">Draft</span><ArrowUpRight size={17}/></Link>)}</div></main></Layout>;
 }
 
 function DocumentPreview() {
   const [, navigate] = useLocation();
-  const saved = getStored<DocumentDraft | null>("nyaya-document-draft", null);
-  const savedComplaint = getStored<api.ComplaintData | null>("nyaya-complaint-result", null);
+  const saved = getStored<DocumentDraft | null>("disha-document-draft", null);
+  const savedComplaint = getStored<api.ComplaintData | null>("disha-complaint-result", null);
 
   const title = savedComplaint?.title || saved?.title || "Consumer Complaint";
   const signer = saved?.name || "A citizen";
@@ -400,7 +403,40 @@ function DocumentPreview() {
   const issue = saved?.issue || "a service that I paid for but did not receive as described";
   const documentText = savedComplaint?.content || `APPLICATION / COMPLAINT\n\nTo,\n${person}\n\nSubject: ${title}\n\nRespected Sir/Madam,\n\nI am writing to formally raise a complaint regarding ${issue}. I request that the matter be reviewed and that an appropriate resolution be provided.\n\nI have kept the relevant payment records and communication history available should they be required.\n\n${saved?.extra || "Thank you for your attention to this matter."}\n\nYours faithfully,\n${signer}`;
   function copyDocument() { if (!navigator.clipboard) { toast("Copy is not available in this browser."); return; } navigator.clipboard.writeText(documentText).then(() => toast("Document copied to clipboard.")).catch(() => toast("Copy is not available in this browser.")); }
-  function downloadDocument() { const blob = new Blob([documentText], { type: "text/plain;charset=utf-8" }); const url = URL.createObjectURL(blob); const anchor = document.createElement("a"); anchor.href = url; anchor.download = `${title.replace(/[^a-z0-9]+/gi, "-").toLowerCase() || "nyaya-document"}.txt`; anchor.click(); URL.revokeObjectURL(url); toast("Text document downloaded."); }
+  async function downloadDocument() {
+    const complaintId = savedComplaint?.complaint_id || "doc_123";
+    toast("Generating document from backend...");
+    try {
+      const res = await api.exportComplaintDocument(complaintId, "text");
+      if (res.success && res.data) {
+        if (res.data.download_url) {
+          window.open(res.data.download_url, "_blank");
+          toast("Opening backend generated document.");
+          return;
+        }
+        const exportedText = res.data.content || documentText;
+        const blob = new Blob([exportedText], { type: "text/plain;charset=utf-8" });
+        const url = URL.createObjectURL(blob);
+        const anchor = document.createElement("a");
+        anchor.href = url;
+        anchor.download = res.data.filename || `${title.replace(/[^a-z0-9]+/gi, "-").toLowerCase() || "disha-document"}.txt`;
+        anchor.click();
+        URL.revokeObjectURL(url);
+        toast("Backend exported document downloaded.");
+        return;
+      }
+    } catch {
+      // Graceful fallback to documentText if network issue
+    }
+    const blob = new Blob([documentText], { type: "text/plain;charset=utf-8" });
+    const url = URL.createObjectURL(blob);
+    const anchor = document.createElement("a");
+    anchor.href = url;
+    anchor.download = `${title.replace(/[^a-z0-9]+/gi, "-").toLowerCase() || "disha-document"}.txt`;
+    anchor.click();
+    URL.revokeObjectURL(url);
+    toast("Document downloaded.");
+  }
   return <Layout><main className="app-page preview-page"><div className="preview-head scroll-replay"><div><Link href="/documents" className="back"><ChevronLeft size={16}/> My documents</Link><Eyebrow>Case file 03 · Document preview · Draft</Eyebrow><h1>{title}</h1></div><div className="toolbar"><button onClick={() => navigate("/documents/new?edit=1")}>Edit</button><button onClick={copyDocument}><Copy size={15}/> Copy</button><button onClick={downloadDocument}><Download size={15}/> Download</button><button onClick={() => navigate("/documents/new?regenerate=1")}><Sparkles size={15}/> Regenerate</button></div></div><div className="preview-layout"><article className="paper scroll-replay"><div className="paper-kicker scroll-replay">APPLICATION / COMPLAINT</div><div className="paper-rule scroll-replay"></div><p className="scroll-replay">To,<br/><strong>{person}</strong></p><p className="scroll-replay"><strong>Subject:</strong><br/>{title}</p><p className="scroll-replay">Respected Sir/Madam,</p><p className="scroll-replay">I am writing to formally raise a complaint regarding {issue}. I request that the matter be reviewed and that an appropriate resolution be provided.</p><p className="scroll-replay">I have kept the relevant payment records and communication history available should they be required.</p><p className="scroll-replay">{saved?.extra || "Thank you for your attention to this matter."}</p><p className="scroll-replay">Yours faithfully,<br/><strong>{signer}</strong></p></article><aside className="metadata scroll-replay"><Eyebrow>Document details</Eyebrow><dl><dt>Document type</dt><dd>{title}</dd><dt>Prepared for</dt><dd>{signer}</dd><dt>Created date</dt><dd>{saved?.createdAt || "22 August 2026"}</dd><dt>Sources used</dt><dd>2 example sources</dd></dl><Sources/><p>Review all details and supporting requirements before sending.</p></aside></div></main></Layout>;
 }
 
