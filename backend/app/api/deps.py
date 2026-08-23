@@ -46,3 +46,10 @@ def get_complaint_service(
         complaint_repo=ComplaintRepository(),
         rag_client=rag_client,
     )
+
+
+def get_rti_service(
+    rag_client: RAGClient = Depends(get_rag_client),
+) -> "RTIDraftingService":
+    from app.services.rti_service import RTIDraftingService
+    return RTIDraftingService(rag_client=rag_client)

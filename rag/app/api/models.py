@@ -18,6 +18,10 @@ class RAGQueryRequest(BaseModel):
     document_id: Optional[str] = Field(default=None, description="Optional filter for specific document ID")
     document_type: Optional[str] = Field(default=None, description="Optional filter for document category (law, scheme, rule)")
     issuing_authority: Optional[str] = Field(default=None, description="Optional filter for issuing authority")
+    mode: Optional[str] = Field(default=None, description="Execution mode: 'rti_draft' or 'qa'")
+    applicant_name: Optional[str] = Field(default=None, description="Optional applicant name for drafting")
+    applicant_address: Optional[str] = Field(default=None, description="Optional applicant address for drafting")
+    public_authority: Optional[str] = Field(default=None, description="Optional public authority name for drafting")
 
     @model_validator(mode="after")
     def validate_candidate_k_ge_top_k(self) -> "RAGQueryRequest":

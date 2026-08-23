@@ -138,6 +138,93 @@ class RAGClient:
             issuing_authority=jurisdiction,
         )
 
+    async def draft_rti_application(
+        self,
+        request_text: str,
+        applicant_name: Optional[str] = None,
+        applicant_address: Optional[str] = None,
+        public_authority: Optional[str] = None,
+    ) -> RAGQueryResponse:
+        """
+        Sends plain-language RTI request to RAG microservice for structured RTI drafting.
+        """
+        request_model = RAGQueryRequest(
+            query=request_text,
+            top_k=5,
+            candidate_k=10,
+            document_type="law",
+            mode="rti_draft",
+            applicant_name=applicant_name,
+            applicant_address=applicant_address,
+            public_authority=public_authority,
+        )
+
+        url = f"{self.base_url}/api/v1/query"
+
+        try:
+            async with httpx.AsyncClient(timeout=self.timeout) as client:
+                response = await client.post(url, json=request_model.model_dump(), headers=self._get_headers())
+
+                if response.status_code == 200:
+                    data = response.json()
+                    payload = data.get("data", data)
+                    parsed = RAGQueryResponse(**payload)
+                    if parsed.answer and parsed.answer.strip():
+                        return parsed
+        except Exception as exc:
+            logger.warning(f"RAG service error during RTI drafting: {exc}")
+            if self.raise_on_error:
+                raise RAGServiceError(message="Failed to generate RTI draft from RAG service", details={"error": str(exc)})
+
+        # Fallback offline RTI draft generator
+        auth_val = public_authority or "[Public Authority]"
+        name_val = applicant_name or "[Applicant Name]"
+        addr_val = applicant_address or "[Applicant Address]"
+
+        fallback_draft = f"""RTI APPLICATION
+
+To:
+[Public Information Officer]
+{auth_val}
+
+Subject: Request for Information under the Right to Information Act, 2005 regarding {request_text}
+
+Respected Sir/Madam,
+
+Under Section 6(1) of the Right to Information Act, 2005, I seek the following information:
+
+1. Certified details and documents regarding: {request_text}
+2. Complete copies of sanction orders, expenditure statements, and project completion reports.
+
+Kindly provide the requested information within the statutory period of 30 days as prescribed under Section 7(1) of the RTI Act, 2005.
+
+Applicant Details:
+Name: {name_val}
+Address: {addr_val}
+Contact: [Contact Information]
+
+Date: [Date]
+Place: [Place]"""
+
+        return RAGQueryResponse(
+            query=request_text,
+            answer=fallback_draft,
+            limitations="RAG microservice unreachable. Fallback RTI template generated.",
+            citations=[
+                Citation(
+                    source_id="rti_act_2005_section_6_38",
+                    document_id="rti_act_2005",
+                    document_title="Right to Information Act, 2005",
+                    document_type="law",
+                    issuing_authority="Government of India",
+                    section="Section 6(1)",
+                    page_start=10,
+                    page_end=11,
+                    source_url="https://cic.gov.in/sites/default/files/RTI-Act_English.pdf",
+                )
+            ]
+        )
+
     async def generate_complaint_document(
         self,
         document_type: str,

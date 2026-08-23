@@ -34,24 +34,21 @@ class RAGPipeline:
         document_id: Optional[str] = None,
         document_type: Optional[str] = None,
         issuing_authority: Optional[str] = None,
+        mode: Optional[str] = None,
+        applicant_name: Optional[str] = None,
+        applicant_address: Optional[str] = None,
+        public_authority: Optional[str] = None,
         include_debug: bool = True
     ) -> "RAGQueryResponse":
         """
-        Executes end-to-end RAG pipeline for a given user query.
-
-        Args:
-            query: User's natural-language question.
-            top_k: Final top reranked results passed to LLM (default: 5).
-            candidate_k: Initial vector search candidate pool size (default: 10).
-            document_id: Optional metadata filter for document ID.
-            document_type: Optional metadata filter for document type.
-            issuing_authority: Optional metadata filter for issuing authority.
-            include_debug: Whether to include retrieval debug details in output.
-
-        Returns:
-            RAGQueryResponse containing answer, limitations, verified citations, and debug retrieval info.
+        Executes end-to-end RAG pipeline for a given user query or RTI draft request.
         """
         clean_query = query.strip()
+
+        # If RTI drafting mode, default document_type filter to 'law' if unset
+        effective_doc_type = document_type
+        if mode == "rti_draft" and not effective_doc_type:
+            effective_doc_type = "law"
 
         # 1. Two-stage candidate retrieval and cross-encoder reranking
         reranked_resp = self.retriever.retrieve(
@@ -59,14 +56,18 @@ class RAGPipeline:
             candidate_k=candidate_k,
             top_k=top_k,
             document_id=document_id,
-            document_type=document_type,
+            document_type=effective_doc_type,
             issuing_authority=issuing_authority
         )
 
         # 2. Grounded LLM generation
         gen_resp = self.generator.generate(
             question=clean_query,
-            retrieved_results=reranked_resp.results
+            retrieved_results=reranked_resp.results,
+            mode=mode,
+            applicant_name=applicant_name,
+            applicant_address=applicant_address,
+            public_authority=public_authority,
         )
 
         # 3. Verified citation mapping

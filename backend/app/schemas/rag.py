@@ -52,6 +52,10 @@ class RAGQueryRequest(BaseModel):
     document_id: Optional[str] = Field(default=None, description="Optional document ID filter")
     document_type: Optional[str] = Field(default=None, description="Optional document category filter")
     issuing_authority: Optional[str] = Field(default=None, description="Optional issuing authority filter")
+    mode: Optional[str] = Field(default=None, description="Optional execution mode e.g. 'rti_draft'")
+    applicant_name: Optional[str] = Field(default=None, description="Optional applicant name for drafting")
+    applicant_address: Optional[str] = Field(default=None, description="Optional applicant address for drafting")
+    public_authority: Optional[str] = Field(default=None, description="Optional target public authority name")
 
 
 class RAGQueryResponse(BaseModel):

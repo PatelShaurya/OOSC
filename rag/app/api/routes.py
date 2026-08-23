@@ -42,7 +42,11 @@ def run_rag_query(
             candidate_k=request.candidate_k,
             document_id=request.document_id,
             document_type=request.document_type,
-            issuing_authority=request.issuing_authority
+            issuing_authority=request.issuing_authority,
+            mode=request.mode,
+            applicant_name=request.applicant_name,
+            applicant_address=request.applicant_address,
+            public_authority=request.public_authority,
         )
         return response
 
