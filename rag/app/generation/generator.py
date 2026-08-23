@@ -114,6 +114,10 @@ class Generator:
             raw_answer = parsed_data.get("answer", "").strip()
             raw_limitations = parsed_data.get("limitations")
             raw_source_ids = parsed_data.get("source_ids", [])
+            raw_what_we_understood = parsed_data.get("what_we_understood")
+            raw_what_you_can_do = parsed_data.get("what_you_can_do", [])
+            raw_what_you_need = parsed_data.get("what_you_need", [])
+            raw_next_step = parsed_data.get("next_step")
 
             if not raw_answer:
                 raw_answer = "The available legal sources do not specify sufficient details to answer this query."
@@ -124,8 +128,15 @@ class Generator:
                 if isinstance(sid, str) and sid in valid_chunk_ids
             ]
 
+            clean_what_you_can_do = [str(x).strip() for x in raw_what_you_can_do if isinstance(x, (str, int)) and str(x).strip()] if isinstance(raw_what_you_can_do, list) else []
+            clean_what_you_need = [str(x).strip() for x in raw_what_you_need if isinstance(x, (str, int)) and str(x).strip()] if isinstance(raw_what_you_need, list) else []
+
             return GenerationResponse(
                 answer=raw_answer,
+                what_we_understood=raw_what_we_understood if isinstance(raw_what_we_understood, str) and raw_what_we_understood.strip() else None,
+                what_you_can_do=clean_what_you_can_do,
+                what_you_need=clean_what_you_need,
+                next_step=raw_next_step if isinstance(raw_next_step, str) and raw_next_step.strip() else None,
                 limitations=raw_limitations if isinstance(raw_limitations, str) else None,
                 source_ids=validated_source_ids
             )

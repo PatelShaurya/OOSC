@@ -1,10 +1,11 @@
 from fastapi import APIRouter
-from app.api.v1 import auth, complaints, conversations, form_sessions, health, rti
+from app.api.v1 import auth, complaints, conversations, form_sessions, health, query, rti
 
 api_router = APIRouter()
 
 api_router.include_router(health.router)
 api_router.include_router(auth.router)
+api_router.include_router(query.router)
 api_router.include_router(conversations.router)
 api_router.include_router(form_sessions.router)
 api_router.include_router(complaints.router)

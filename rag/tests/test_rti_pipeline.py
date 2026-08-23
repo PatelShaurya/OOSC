@@ -58,6 +58,10 @@ def test_rag_pipeline_rti_drafting_mode():
 
     mock_mapper.create_cited_response.return_value = MagicMock(
         answer="RTI APPLICATION\n\nTo:\n[PIO]\n[Public Authority]\n\nSubject: Road repairs...",
+        what_we_understood="Expenditure request",
+        what_you_can_do=[],
+        what_you_need=[],
+        next_step="Submit RTI application",
         limitations="None",
         citations=[],
     )

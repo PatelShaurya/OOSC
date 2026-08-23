@@ -145,7 +145,7 @@ export function useRTIDraft() {
     mutationFn: (params: {
       request: string;
       applicant_name?: string;
-      address?: string;
+      applicant_address?: string;
       public_authority?: string;
     }) => api.draftRTI(params),
   });

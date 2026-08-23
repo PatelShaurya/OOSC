@@ -90,6 +90,10 @@ class RAGPipeline:
         return RAGQueryResponse(
             query=clean_query,
             answer=cited_resp.answer,
+            what_we_understood=cited_resp.what_we_understood,
+            what_you_can_do=cited_resp.what_you_can_do,
+            what_you_need=cited_resp.what_you_need,
+            next_step=cited_resp.next_step,
             limitations=cited_resp.limitations,
             citations=cited_resp.citations,
             retrieval=debug_info

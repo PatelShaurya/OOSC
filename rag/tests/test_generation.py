@@ -180,3 +180,25 @@ def test_grounding_case_no_invented_sections(sample_retrieved_results):
     assert "Section 39" in resp.answer
     assert "Section 83" in resp.answer
     assert "Section 50" not in resp.answer
+
+
+def test_action_oriented_guidance_fields_parsing(sample_retrieved_results):
+    """Test action-oriented guidance fields (what_we_understood, what_you_can_do, what_you_need, next_step) are parsed correctly."""
+    mock_client = MagicMock(spec=LLMClient)
+    mock_client.generate.return_value = json.dumps({
+        "answer": "You can file a complaint with the District Commission under Section 39.",
+        "what_we_understood": "You received a defective product and want to know available remedies.",
+        "what_you_can_do": ["Request replacement of goods", "File product liability action under Section 83"],
+        "what_you_need": ["Proof of purchase receipt", "Details of defective goods"],
+        "next_step": "Submit formal complaint to the District Commission.",
+        "limitations": None,
+        "source_ids": ["doc1_chunk_39", "doc1_chunk_83"]
+    })
+
+    generator = Generator(llm_client=mock_client)
+    resp = generator.generate("What can I do if I receive a defective product?", sample_retrieved_results)
+
+    assert resp.what_we_understood == "You received a defective product and want to know available remedies."
+    assert resp.what_you_can_do == ["Request replacement of goods", "File product liability action under Section 83"]
+    assert resp.what_you_need == ["Proof of purchase receipt", "Details of defective goods"]
+    assert resp.next_step == "Submit formal complaint to the District Commission."

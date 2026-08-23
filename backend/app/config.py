@@ -26,7 +26,7 @@ class Settings(BaseSettings):
     SUPABASE_JWT_SECRET: str = "dev-secret-key-civicai-hackathon-2026"
 
     # External RAG / AI Service
-    RAG_SERVICE_URL: str = "http://localhost:8000"
+    RAG_SERVICE_URL: str = "http://127.0.0.1:8001"
     RAG_API_KEY: str = ""
     RAG_TIMEOUT_SECONDS: float = 60.0
 

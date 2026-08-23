@@ -49,6 +49,10 @@ class RAGQueryResponse(BaseModel):
     """
     query: str = Field(..., description="Original normalized user question")
     answer: str = Field(..., description="Grounded, plain-language legal answer")
+    what_we_understood: Optional[str] = Field(default=None, description="Brief summary of user situation")
+    what_you_can_do: List[str] = Field(default_factory=list, description="Action steps supported by retrieved sources")
+    what_you_need: List[str] = Field(default_factory=list, description="Required information/documents supported by retrieved sources")
+    next_step: Optional[str] = Field(default=None, description="Concrete next step supported by retrieved sources")
     limitations: Optional[str] = Field(default=None, description="Explicit statement of any missing information")
     citations: List[Citation] = Field(default_factory=list, description="List of verified legal citations")
     retrieval: Optional[RetrievalDebugInfo] = Field(default=None, description="Optional retrieval debug details")
