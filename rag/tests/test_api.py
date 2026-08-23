@@ -102,7 +102,11 @@ def test_valid_query_contract(client, mock_pipeline):
         candidate_k=10,
         document_id=None,
         document_type=None,
-        issuing_authority=None
+        issuing_authority=None,
+        mode=None,
+        applicant_name=None,
+        applicant_address=None,
+        public_authority=None
     )
 
 
@@ -124,7 +128,11 @@ def test_metadata_filters_passed_to_pipeline(client, mock_pipeline):
         candidate_k=15,
         document_id=None,
         document_type="law",
-        issuing_authority="Government of India"
+        issuing_authority="Government of India",
+        mode=None,
+        applicant_name=None,
+        applicant_address=None,
+        public_authority=None
     )
 
 

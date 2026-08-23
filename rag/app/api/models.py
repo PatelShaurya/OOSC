@@ -18,6 +18,10 @@ class RAGQueryRequest(BaseModel):
     document_id: Optional[str] = Field(default=None, description="Optional filter for specific document ID")
     document_type: Optional[str] = Field(default=None, description="Optional filter for document category (law, scheme, rule)")
     issuing_authority: Optional[str] = Field(default=None, description="Optional filter for issuing authority")
+    mode: Optional[str] = Field(default=None, description="Execution mode: 'rti_draft' or 'qa'")
+    applicant_name: Optional[str] = Field(default=None, description="Optional applicant name for drafting")
+    applicant_address: Optional[str] = Field(default=None, description="Optional applicant address for drafting")
+    public_authority: Optional[str] = Field(default=None, description="Optional public authority name for drafting")
 
     @model_validator(mode="after")
     def validate_candidate_k_ge_top_k(self) -> "RAGQueryRequest":
@@ -45,6 +49,10 @@ class RAGQueryResponse(BaseModel):
     """
     query: str = Field(..., description="Original normalized user question")
     answer: str = Field(..., description="Grounded, plain-language legal answer")
+    what_we_understood: Optional[str] = Field(default=None, description="Brief summary of user situation")
+    what_you_can_do: List[str] = Field(default_factory=list, description="Action steps supported by retrieved sources")
+    what_you_need: List[str] = Field(default_factory=list, description="Required information/documents supported by retrieved sources")
+    next_step: Optional[str] = Field(default=None, description="Concrete next step supported by retrieved sources")
     limitations: Optional[str] = Field(default=None, description="Explicit statement of any missing information")
     citations: List[Citation] = Field(default_factory=list, description="List of verified legal citations")
     retrieval: Optional[RetrievalDebugInfo] = Field(default=None, description="Optional retrieval debug details")

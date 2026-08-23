@@ -96,6 +96,10 @@ class CitationMapper:
 
         return CitedGenerationResponse(
             answer=generation_response.answer,
+            what_we_understood=generation_response.what_we_understood,
+            what_you_can_do=generation_response.what_you_can_do,
+            what_you_need=generation_response.what_you_need,
+            next_step=generation_response.next_step,
             limitations=generation_response.limitations,
             citations=verified_citations,
             source_ids=verified_source_ids

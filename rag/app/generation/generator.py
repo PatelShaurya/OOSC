@@ -9,7 +9,12 @@ from pydantic import ValidationError
 from rag.app.generation.context_builder import ContextBuilder
 from rag.app.generation.llm_client import LLMClient
 from rag.app.generation.models import GenerationResponse
-from rag.app.generation.prompts import GROUNDED_SYSTEM_PROMPT, build_user_prompt
+from rag.app.generation.prompts import (
+    GROUNDED_SYSTEM_PROMPT,
+    RTI_DRAFT_SYSTEM_PROMPT,
+    build_rti_user_prompt,
+    build_user_prompt,
+)
 from rag.app.retrieval.models import RetrievalResult
 
 
@@ -50,14 +55,22 @@ class Generator:
     def generate(
         self,
         question: str,
-        retrieved_results: List[RetrievalResult]
+        retrieved_results: List[RetrievalResult],
+        mode: Optional[str] = None,
+        applicant_name: Optional[str] = None,
+        applicant_address: Optional[str] = None,
+        public_authority: Optional[str] = None,
     ) -> GenerationResponse:
         """
-        Generates a grounded plain-language answer strictly from supplied context chunks.
+        Generates a grounded plain-language answer or RTI draft strictly from supplied context chunks.
 
         Args:
-            question: User's natural-language question.
+            question: User's natural-language question or information request.
             retrieved_results: List of top reranked RetrievalResult chunks from Stage 4C.
+            mode: Optional execution mode e.g. 'rti_draft'.
+            applicant_name: Optional applicant name for RTI draft.
+            applicant_address: Optional applicant address for RTI draft.
+            public_authority: Optional public authority name for RTI draft.
 
         Returns:
             Validated GenerationResponse object.
@@ -74,13 +87,24 @@ class Generator:
         # 1. Build context blocks and get valid chunk IDs
         context_text, valid_chunk_ids = self.context_builder.build_context(retrieved_results)
 
-        # 2. Construct grounded user prompt
-        user_prompt = build_user_prompt(clean_question, context_text)
+        # 2. Select prompt based on mode
+        if mode == "rti_draft":
+            system_prompt = RTI_DRAFT_SYSTEM_PROMPT
+            user_prompt = build_rti_user_prompt(
+                question=clean_question,
+                context_text=context_text,
+                applicant_name=applicant_name,
+                applicant_address=applicant_address,
+                public_authority=public_authority,
+            )
+        else:
+            system_prompt = GROUNDED_SYSTEM_PROMPT
+            user_prompt = build_user_prompt(clean_question, context_text)
 
         try:
             # 3. Send prompt to LLM client
             raw_response = self.llm_client.generate(
-                system_prompt=GROUNDED_SYSTEM_PROMPT,
+                system_prompt=system_prompt,
                 user_prompt=user_prompt
             )
 
@@ -90,6 +114,10 @@ class Generator:
             raw_answer = parsed_data.get("answer", "").strip()
             raw_limitations = parsed_data.get("limitations")
             raw_source_ids = parsed_data.get("source_ids", [])
+            raw_what_we_understood = parsed_data.get("what_we_understood")
+            raw_what_you_can_do = parsed_data.get("what_you_can_do", [])
+            raw_what_you_need = parsed_data.get("what_you_need", [])
+            raw_next_step = parsed_data.get("next_step")
 
             if not raw_answer:
                 raw_answer = "The available legal sources do not specify sufficient details to answer this query."
@@ -100,8 +128,15 @@ class Generator:
                 if isinstance(sid, str) and sid in valid_chunk_ids
             ]
 
+            clean_what_you_can_do = [str(x).strip() for x in raw_what_you_can_do if isinstance(x, (str, int)) and str(x).strip()] if isinstance(raw_what_you_can_do, list) else []
+            clean_what_you_need = [str(x).strip() for x in raw_what_you_need if isinstance(x, (str, int)) and str(x).strip()] if isinstance(raw_what_you_need, list) else []
+
             return GenerationResponse(
                 answer=raw_answer,
+                what_we_understood=raw_what_we_understood if isinstance(raw_what_we_understood, str) and raw_what_we_understood.strip() else None,
+                what_you_can_do=clean_what_you_can_do,
+                what_you_need=clean_what_you_need,
+                next_step=raw_next_step if isinstance(raw_next_step, str) and raw_next_step.strip() else None,
                 limitations=raw_limitations if isinstance(raw_limitations, str) else None,
                 source_ids=validated_source_ids
             )

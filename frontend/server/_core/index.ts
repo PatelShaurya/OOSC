@@ -9,7 +9,7 @@ import { appRouter } from "../routers";
 import { createContext } from "./context";
 import { serveStatic, setupVite } from "./vite";
 
-import { apiV1Router } from "../apiV1";
+import { proxyRouter } from "../proxy";
 
 function isPortAvailable(port: number): Promise<boolean> {
   return new Promise(resolve => {
@@ -38,8 +38,8 @@ async function startServer() {
   app.use(express.urlencoded({ limit: "50mb", extended: true }));
   registerStorageProxy(app);
   registerOAuthRoutes(app);
-  // CivicAI API v1
-  app.use("/api/v1", apiV1Router);
+  // Proxy CivicAI API v1 directly to Main FastAPI Backend (http://127.0.0.1:8000)
+  app.use("/api/v1", proxyRouter);
   // tRPC API
   app.use(
     "/api/trpc",

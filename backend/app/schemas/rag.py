@@ -52,6 +52,10 @@ class RAGQueryRequest(BaseModel):
     document_id: Optional[str] = Field(default=None, description="Optional document ID filter")
     document_type: Optional[str] = Field(default=None, description="Optional document category filter")
     issuing_authority: Optional[str] = Field(default=None, description="Optional issuing authority filter")
+    mode: Optional[str] = Field(default=None, description="Optional execution mode e.g. 'rti_draft'")
+    applicant_name: Optional[str] = Field(default=None, description="Optional applicant name for drafting")
+    applicant_address: Optional[str] = Field(default=None, description="Optional applicant address for drafting")
+    public_authority: Optional[str] = Field(default=None, description="Optional target public authority name")
 
 
 class RAGQueryResponse(BaseModel):
@@ -61,6 +65,10 @@ class RAGQueryResponse(BaseModel):
     """
     query: Optional[str] = Field(default=None, description="Original query string")
     answer: str = Field(..., description="Grounded plain-language answer")
+    what_we_understood: Optional[str] = Field(default=None, description="Brief summary of user situation")
+    what_you_can_do: List[str] = Field(default_factory=list, description="Action steps supported by retrieved sources")
+    what_you_need: List[str] = Field(default_factory=list, description="Required information/documents supported by retrieved sources")
+    next_step: Optional[str] = Field(default=None, description="Concrete next step supported by retrieved sources")
     limitations: Optional[str] = Field(default=None, description="Explicit limitations or missing info statement")
     citations: List[Citation] = Field(default_factory=list, description="Verified legal citations")
     suggested_followups: List[str] = Field(default_factory=list, description="Suggested followup questions")
