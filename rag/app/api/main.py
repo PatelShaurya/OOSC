@@ -49,6 +49,17 @@ app.add_middleware(
 app.include_router(api_v1_router, prefix="/api/v1")
 
 
+@app.get("/", summary="Root API Info")
+def root_info():
+    return {
+        "service": "CivicAI RAG Service",
+        "status": "online",
+        "docs": "/docs",
+        "health": "/health",
+        "query_endpoint": "/api/v1/query"
+    }
+
+
 @app.get(
     "/health",
     summary="Root Service Health Check",
