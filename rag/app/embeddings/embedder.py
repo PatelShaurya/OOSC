@@ -1,6 +1,7 @@
 """
 Embedding component using BAAI/bge-m3 producing normalized 1024-dimensional vectors.
 """
+import os
 from typing import List, Union, Optional
 import numpy as np
 import torch
@@ -9,21 +10,21 @@ from sentence_transformers import SentenceTransformer
 
 class BGEEmbedder:
     """
-    Singleton-style embedder wrapping BAAI/bge-m3.
-    Generates 1024-dimensional L2-normalized embeddings for legal text chunks and queries.
+    Embedder wrapping BAAI models.
+    Generates normalized embeddings for legal text chunks and queries.
     """
 
-    DEFAULT_MODEL_NAME = "BAAI/bge-m3"
-    EMBEDDING_DIM = 1024
+    DEFAULT_MODEL_NAME = os.getenv("EMBEDDING_MODEL_NAME", "BAAI/bge-small-en-v1.5")
+    EMBEDDING_DIM = int(os.getenv("EMBEDDING_DIM", "384"))
 
     def __init__(
         self,
-        model_name: str = DEFAULT_MODEL_NAME,
+        model_name: Optional[str] = None,
         device: str = "auto",
         batch_size: int = 16,
         normalize: bool = True
     ):
-        self.model_name = model_name
+        self.model_name = model_name or self.DEFAULT_MODEL_NAME
         self.batch_size = batch_size
         self.normalize = normalize
 

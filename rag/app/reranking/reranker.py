@@ -10,30 +10,45 @@ from rag.app.retrieval.models import RetrievalResult
 from rag.app.retrieval.retriever import SemanticRetriever
 
 
+import os
+
 class CrossEncoderReranker:
     """
-    Reranks candidate legal document chunks using the BAAI/bge-reranker-v2-m3 cross-encoder model.
+    Reranks candidate legal document chunks using a CrossEncoder model.
     Receives (query, candidate_chunk) pairs and computes fine-grained cross-attention relevance scores.
     """
 
     def __init__(
         self,
-        model_name: str = "BAAI/bge-reranker-v2-m3",
+        model_name: Optional[str] = None,
         device: str = "auto",
         max_length: int = 1024
     ):
+        self.model = None
+        disable_reranker = os.getenv("DISABLE_RERANKER", "false").lower() in ("true", "1", "yes")
+
+        if disable_reranker:
+            print("CrossEncoder reranker disabled via DISABLE_RERANKER environment variable.")
+            return
+
+        effective_model = model_name or os.getenv("RERANKER_MODEL_NAME", "BAAI/bge-reranker-small")
+
         if device == "auto":
             self.device = "cuda" if torch.cuda.is_available() else "cpu"
         else:
             self.device = device
 
-        print(f"Loading cross-encoder reranker model '{model_name}' on device '{self.device}'...")
-        self.model = CrossEncoder(
-            model_name,
-            max_length=max_length,
-            device=self.device
-        )
-        print("Cross-encoder reranker model loaded successfully.")
+        try:
+            print(f"Loading cross-encoder reranker model '{effective_model}' on device '{self.device}'...")
+            self.model = CrossEncoder(
+                effective_model,
+                max_length=max_length,
+                device=self.device
+            )
+            print("Cross-encoder reranker model loaded successfully.")
+        except Exception as exc:
+            print(f"Warning: Could not load CrossEncoder model '{effective_model}' ({exc}). Reranker will operate in bypass mode.")
+            self.model = None
 
     def rerank(
         self,
@@ -57,6 +72,9 @@ class CrossEncoderReranker:
 
         if not clean_query or not results:
             return []
+
+        if self.model is None:
+            return results[:top_k]
 
         # Create query-document pairs
         pairs = [[clean_query, r.text] for r in results]
