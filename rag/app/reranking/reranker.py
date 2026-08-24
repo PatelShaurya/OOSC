@@ -1,16 +1,13 @@
 """
-Cross-Encoder Reranker using BAAI/bge-reranker-v2-m3 and integrated RerankedRetriever pipeline.
+Cross-Encoder Reranker using CrossEncoder models and integrated RerankedRetriever pipeline.
 """
+import os
 from typing import List, Optional
-import torch
-from sentence_transformers import CrossEncoder
 
 from rag.app.reranking.models import RerankedResponse
 from rag.app.retrieval.models import RetrievalResult
 from rag.app.retrieval.retriever import SemanticRetriever
 
-
-import os
 
 class CrossEncoderReranker:
     """
@@ -33,12 +30,15 @@ class CrossEncoderReranker:
 
         effective_model = model_name or os.getenv("RERANKER_MODEL_NAME", "BAAI/bge-reranker-small")
 
-        if device == "auto":
-            self.device = "cuda" if torch.cuda.is_available() else "cpu"
-        else:
-            self.device = device
-
         try:
+            import torch
+            from sentence_transformers import CrossEncoder
+
+            if device == "auto":
+                self.device = "cuda" if torch.cuda.is_available() else "cpu"
+            else:
+                self.device = device
+
             print(f"Loading cross-encoder reranker model '{effective_model}' on device '{self.device}'...")
             self.model = CrossEncoder(
                 effective_model,

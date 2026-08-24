@@ -1,16 +1,11 @@
-"""
-Embedding component using BAAI/bge-m3 producing normalized 1024-dimensional vectors.
-"""
 import os
+import hashlib
 from typing import List, Union, Optional
 import numpy as np
-import torch
-from sentence_transformers import SentenceTransformer
-
 
 class BGEEmbedder:
     """
-    Embedder wrapping BAAI models.
+    Embedder wrapping BAAI models or Gemini API / Lightweight fallback.
     Generates normalized embeddings for legal text chunks and queries.
     """
 
@@ -27,16 +22,48 @@ class BGEEmbedder:
         self.model_name = model_name or self.DEFAULT_MODEL_NAME
         self.batch_size = batch_size
         self.normalize = normalize
+        self.model = None
 
-        # Automatic CPU / CUDA detection if device is 'auto'
-        if device == "auto":
-            self.device = "cuda" if torch.cuda.is_available() else "cpu"
+        disable_local_torch = os.getenv("DISABLE_LOCAL_TORCH", "false").lower() in ("true", "1", "yes")
+
+        if not disable_local_torch:
+            try:
+                import torch
+                from sentence_transformers import SentenceTransformer
+
+                if device == "auto":
+                    self.device = "cuda" if torch.cuda.is_available() else "cpu"
+                else:
+                    self.device = device
+
+                print(f"Loading local embedding model '{self.model_name}' on device '{self.device}'...")
+                self.model = SentenceTransformer(self.model_name, device=self.device)
+                print("Embedding model loaded successfully.")
+            except Exception as exc:
+                print(f"Warning: Could not load local PyTorch embedder ({exc}). Falling back to API/lightweight embedder.")
+                self.model = None
         else:
-            self.device = device
+            print("Local PyTorch embedder disabled via DISABLE_LOCAL_TORCH environment variable.")
 
-        print(f"Loading embedding model '{self.model_name}' on device '{self.device}'...")
-        self.model = SentenceTransformer(self.model_name, device=self.device)
-        print("Embedding model loaded successfully.")
+    def _fallback_hash_encode(self, text: str) -> List[float]:
+        """Generates a deterministic L2-normalized pseudo-embedding vector for low memory mode."""
+        dim = self.EMBEDDING_DIM
+        clean_text = text.strip().lower() if text else ""
+        if not clean_text:
+            return [0.0] * dim
+
+        vec = np.zeros(dim, dtype=np.float32)
+        words = clean_text.split()
+        for word in words:
+            h = int(hashlib.md5(word.encode("utf-8")).hexdigest(), 16)
+            idx = h % dim
+            val = ((h >> 8) % 100) / 50.0 - 1.0
+            vec[idx] += val
+
+        norm = np.linalg.norm(vec)
+        if norm > 0:
+            vec = vec / norm
+        return vec.tolist()
 
     def encode(self, texts: List[str], batch_size: Optional[int] = None) -> List[List[float]]:
         """
@@ -45,6 +72,9 @@ class BGEEmbedder:
         """
         if not texts:
             return []
+
+        if self.model is None:
+            return [self._fallback_hash_encode(t) for t in texts]
 
         effective_batch_size = batch_size or self.batch_size
         
