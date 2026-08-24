@@ -15,14 +15,22 @@ async def query_rag_engine(
     """
     Exposes RAG Query endpoint on Main FastAPI Backend to delegate queries to the RAG microservice.
     """
-    response_data = await rag_client.query(
-        query=payload.query,
-        top_k=payload.top_k,
-        candidate_k=payload.candidate_k,
-        document_id=payload.document_id,
-        document_type=payload.document_type,
-        issuing_authority=payload.issuing_authority,
-    )
+    try:
+        response_data = await rag_client.query(
+            query=payload.query,
+            top_k=payload.top_k,
+            candidate_k=payload.candidate_k,
+            document_id=payload.document_id,
+            document_type=payload.document_type,
+            issuing_authority=payload.issuing_authority,
+        )
+    except Exception as exc:
+        response_data = rag_client._generate_fallback_query_response(
+            query=payload.query,
+            category=payload.document_type,
+            jurisdiction=payload.issuing_authority,
+        )
+
     return APIResponse(
         success=True,
         data=response_data,
