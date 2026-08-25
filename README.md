@@ -423,4 +423,4 @@ pytest rag/tests/
 CivicAI (Disha) is an open-source civic empowerment tool. Information provided by the platform is synthesized directly from official public statutory records for guidance purposes and does not constitute formal legal representation. Citizens should verify local administrative filing procedures before submitting claims.
 
 ---
-Made with ❤️ by team Agra Metro
+Made with ❤️ by team Agra ke Metro Fans
